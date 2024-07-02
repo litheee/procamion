@@ -1,0 +1,16 @@
+.cargoesSearchResultList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.cargoesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.pagination {
+  margin-top: auto;
+  padding-top: 32px;
+}

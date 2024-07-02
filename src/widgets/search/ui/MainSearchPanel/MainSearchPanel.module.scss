@@ -1,0 +1,32 @@
+.searchCard {
+  padding: 20px;
+
+  label {
+    margin-bottom: 8px;
+  }
+
+  & > button {
+    margin-top: 24px;
+  }
+}
+
+.routeSearch {
+  margin-top: 12px;
+}
+
+.cargoParamsContainer {
+  margin-top: 12px;
+  padding: 20px;
+}
+
+.cargoParams {
+  margin-top: 16px;
+}
+
+div.departureDate {
+  margin-top: 24px;
+
+  label {
+    margin-bottom: 12px;
+  }
+}

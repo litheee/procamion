@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  height: 60px;
+  background-color: var(--color-black-primary);
+  color: var(--color-white);
+
+  :global .wrapper {
+    align-items: center;
+  }
+}
+
+.link {
+  margin-left: 48px;
+  font-family: var(--font-noto-sans);
+  font-size: 16px;
+  color: var(--color-white);
+  opacity: 0.7;
+  text-decoration: none;
+  transition: opacity 0.2s ease-in;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  margin-left: auto;
+}

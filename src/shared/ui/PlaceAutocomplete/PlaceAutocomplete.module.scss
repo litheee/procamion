@@ -1,0 +1,10 @@
+.placeAutocomplete {
+  :global(.text-field-root .input-adornment:first-child) {
+    border-right: none;
+    padding-right: 0;
+  }
+
+  .countryCodeField {
+    display: none;
+  }
+}

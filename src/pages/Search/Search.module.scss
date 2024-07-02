@@ -1,0 +1,22 @@
+.layout {
+  display: grid;
+  grid-template-columns: 422px 1fr;
+  gap: 23px;
+  flex-grow: 1;
+}
+
+.tabs {
+  margin-top: 8px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.cargoesList {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 32px;
+}

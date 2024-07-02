@@ -1,0 +1,24 @@
+.datePicker {
+  & > div {
+    border: 0.5px solid var(--input-border-color);
+  }
+
+  &.error > div {
+    border-color: var(--color-red);
+
+    input::placeholder {
+      color: var(--color-red);
+    }
+  }
+
+  input {
+    padding: 7px 11px;
+    height: 40px;
+    box-sizing: border-box;
+
+    &::placeholder {
+      opacity: 1;
+      color: var(--color-gray-200);
+    }
+  }
+}
