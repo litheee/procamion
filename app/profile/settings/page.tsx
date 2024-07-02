@@ -1,4 +1,4 @@
-import { ProfileSettingsPage } from '@/pages/profile/Settings/Settings'
+import { ProfileSettingsPage } from '@/pages/profile'
 
 import { Metadata } from 'next'
 
