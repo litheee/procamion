@@ -1,4 +1,4 @@
-import { ProfileResponsesPage } from '@/pages/profile'
+import { ProfileResponsesPage } from '@/pages/profile/Responses/Responses'
 
 import { Metadata } from 'next'
 
