@@ -13,7 +13,7 @@ const schema = z.object({
   phone: z.string().min(12)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 type PhoneAddFormModalProps = {
   open: boolean
@@ -22,12 +22,12 @@ type PhoneAddFormModalProps = {
 }
 
 export const PhoneAddFormModal = ({ open, onClose, onPhoneSubmit }: PhoneAddFormModalProps) => {
-  const useFormProps = useForm<FormSchemaType>({
+  const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
   const { handleSubmit } = useFormProps
 
-  const onFormSubmit = ({ phone }: FormSchemaType) => {
+  const onFormSubmit = ({ phone }: FormSchema) => {
     onPhoneSubmit(phone)
     onClose()
   }

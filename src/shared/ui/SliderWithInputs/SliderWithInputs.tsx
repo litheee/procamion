@@ -11,12 +11,14 @@ import classes from './SliderWithInputs.module.scss'
 
 type SliderWithInputsProps = Omit<MuiSliderProps, 'onChange'> & {
   name: string
+  required?: boolean
   startPlaceholder?: string
   endPlaceholder?: string
 }
 
 export const SliderWithInputs = ({
   name,
+  required,
   startPlaceholder,
   endPlaceholder,
   ...props
@@ -42,7 +44,7 @@ export const SliderWithInputs = ({
         onChange={onStartChange}
       />
 
-      <Slider name={name} {...props} />
+      <Slider name={name} required={required} {...props} />
 
       <TextFieldUncontrolled
         name={`${name}End`}

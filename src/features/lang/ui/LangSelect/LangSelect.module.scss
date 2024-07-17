@@ -27,3 +27,62 @@
     }
   }
 }
+
+.accordionContainer {
+  display: none;
+
+  .accordion {
+    box-shadow: none;
+    background: transparent;
+    color: var(--color-white);
+    font-size: 16px;
+    padding: 10px;
+
+    .accordionSummary {
+      padding: 0;
+      background: transparent;
+      min-height: auto;
+
+      .accordionSummaryContent {
+        margin: 0;
+        min-height: auto;
+      }
+    }
+
+    .accordionDetails {
+      padding: 0;
+    }
+  }
+}
+
+.accordionList {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 7px;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 21px;
+    padding: 0 8px;
+    font-size: 14px;
+    transition: background 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .langSelected {
+    background: color-mix(in srgb, var(--color-primary), transparent 85%);
+  }
+}
+
+@media screen and (max-width: 850px) {
+  .dropdown {
+    display: none;
+  }
+
+  .accordionContainer {
+    display: block;
+  }
+}

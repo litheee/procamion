@@ -6,11 +6,12 @@ import cn from 'classnames'
 import {
   AuthProvider,
   DatePickerLocaliztionProvider,
+  ErrorBoundary,
   Notifications,
   QueryClientProvider,
   UserProvider
 } from '@/app/providers'
-import { muiTheme } from '../config'
+import { muiTheme } from '@/shared/config'
 import { inter, notoSans, roboto } from '@/shared/assets/fonts'
 
 import '@/app/styles/reset.css'
@@ -36,7 +37,10 @@ export default function RootLayout({
             <DatePickerLocaliztionProvider>
               <QueryClientProvider>
                 <AuthProvider>
-                  <UserProvider>{children}</UserProvider>
+                  <UserProvider>
+                    <ErrorBoundary>{children}</ErrorBoundary>
+                  </UserProvider>
+
                   <Notifications />
                 </AuthProvider>
               </QueryClientProvider>

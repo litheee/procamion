@@ -34,6 +34,12 @@ export const Select = ({ name, options, placeholder, ...props }: SelectProps) =>
               select: classes.select,
               error: classes.error
             }}
+            MenuProps={{
+              classes: {
+                paper: classes.paper,
+                list: classes.list
+              }
+            }}
             displayEmpty
             renderValue={(value) => {
               if (value === '') return <span className={classes.placeholder}>{placeholder}</span>

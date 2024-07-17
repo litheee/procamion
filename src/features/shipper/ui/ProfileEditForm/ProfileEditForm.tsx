@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import cn from 'classnames'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { FormProvider, useForm } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
@@ -24,7 +25,7 @@ const schema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1, 'Required'),
   lastName: z.string().min(1, 'Required'),
-  newsletterSubscribe: z.boolean(),
+  newsletterSubscribe: z.boolean().optional(),
   language: z.string().min(1, 'Required'),
   country: z.string().min(1, 'Required'),
   companyName: z.string().min(1, 'Required'),
@@ -32,7 +33,7 @@ const schema = z.object({
   phone: z.string().min(12)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 type ProfileEditFormProps = {
   onEditFinish: () => void
@@ -47,7 +48,9 @@ export const ShipperProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
     }
   })
 
-  const useFormProps = useForm<FormSchemaType>()
+  const useFormProps = useForm<FormSchema>({
+    resolver: zodResolver(schema)
+  })
   const { handleSubmit, reset } = useFormProps
 
   useEffect(() => {
@@ -55,7 +58,17 @@ export const ShipperProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
 
     const { firstName, lastName, language, companyName, country, city, phone, email } = shipper
 
-    reset({ firstName, lastName, language, companyName, country, city, phone, email })
+    reset({
+      firstName,
+      lastName,
+      language,
+      companyName,
+      country,
+      city,
+      phone,
+      email,
+      newsletterSubscribe: false
+    })
   }, [shipper, reset])
 
   const onFormSubmit = ({
@@ -67,7 +80,7 @@ export const ShipperProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
     city,
     phone,
     email
-  }: FormSchemaType) => {
+  }: FormSchema) => {
     editInfo({
       firstName,
       lastName,

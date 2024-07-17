@@ -55,3 +55,25 @@
     }
   }
 }
+
+@media screen and (max-width: 670px) {
+  .profileInfo {
+    & > button {
+      width: 176px;
+      margin-left: auto;
+      margin-top: 40px;
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 45px;
+    margin-top: 30px;
+  }
+
+  .infoList {
+    gap: 20px;
+    margin-top: 20px;
+  }
+}

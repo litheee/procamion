@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { useMutation } from '@tanstack/react-query'
 
 import { carrierSignIn } from '../api/auth'
-import { ROUTE_NAMES } from '../../../../config'
+import { ROUTE_NAMES } from '@/shared/config'
 import { saveJwtTokensToCookie, setHeaderBearerToken } from '@/shared/api'
 import { useAuth } from '@/shared/hooks/useAuth'
 

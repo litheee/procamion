@@ -48,7 +48,13 @@ function handleAxiosError(err: AxiosError<Error>) {
     return
   }
 
+  const errorCode = err.response.status
   const { detail } = err.response.data
+
+  if (errorCode === 403) {
+    window.location.href = '/server-error'
+    return
+  }
 
   if (typeof detail === 'string') {
     toast.error(detail)

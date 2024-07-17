@@ -9,6 +9,7 @@ import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import { toast } from 'react-toastify'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, Checkbox, DatePicker, Select, TextField } from '@/shared/ui'
 import { ProfilePhotoChange } from '@/features/user'
@@ -24,7 +25,7 @@ const schema = z.object({
   email: z.string().email(),
   firstName: z.string().min(1, 'Required'),
   lastName: z.string().min(1, 'Required'),
-  newsletterSubscribe: z.boolean(),
+  newsletterSubscribe: z.boolean().optional(),
   language: z.string().min(1, 'Required'),
   country: z.string().min(1, 'Required'),
   city: z.string().min(1, 'Required'),
@@ -34,7 +35,7 @@ const schema = z.object({
   phone: z.string().min(12)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 type ProfileEditFormProps = {
   onEditFinish: () => void
@@ -49,7 +50,9 @@ export const CarrierProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
     }
   })
 
-  const useFormProps = useForm<FormSchemaType>()
+  const useFormProps = useForm<FormSchema>({
+    resolver: zodResolver(schema)
+  })
   const { handleSubmit, reset } = useFormProps
 
   useEffect(() => {
@@ -67,7 +70,8 @@ export const CarrierProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
       drivingLicense: drivingLicense.number,
       drivingLicenseReceiptDate: drivingLicense.issuanceDate,
       drivingLicenseExpireDate: drivingLicense.expireDate,
-      phone
+      phone,
+      newsletterSubscribe: false
     })
   }, [carrier, reset])
 
@@ -82,7 +86,7 @@ export const CarrierProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
     language,
     lastName,
     phone
-  }: FormSchemaType) => {
+  }: FormSchema) => {
     editInfo({
       city,
       country,

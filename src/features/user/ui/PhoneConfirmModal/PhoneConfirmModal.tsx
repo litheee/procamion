@@ -14,7 +14,7 @@ const schema = z.object({
   code: z.string().min(4)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 type PhoneConfirmModalProps = {
   open: boolean
@@ -25,7 +25,7 @@ type PhoneConfirmModalProps = {
 export const PhoneConfirmModal = ({ open, onPhoneVerify, onClose }: PhoneConfirmModalProps) => {
   const COUNTDOWN_IN_SECONDS = 60
 
-  const useFormProps = useForm<FormSchemaType>({
+  const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
   const { handleSubmit } = useFormProps
@@ -69,7 +69,7 @@ export const PhoneConfirmModal = ({ open, onPhoneVerify, onClose }: PhoneConfirm
     setResendAllowed(false)
   }
 
-  const onFormSubmit = ({ code }: FormSchemaType) => {
+  const onFormSubmit = ({ code }: FormSchema) => {
     onPhoneVerify()
   }
 

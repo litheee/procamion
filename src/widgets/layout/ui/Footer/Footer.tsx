@@ -8,7 +8,7 @@ export const Footer = () => {
     <footer className={classes.footer}>
       <div className='wrapper'>
         <div className={classes.top}>
-          <Logo width={432} height={55} />
+          <Logo className={classes.logo} width={432} height={55} />
 
           <div className={classes.topRight}>
             <div className={classes.links}>
@@ -52,7 +52,12 @@ export const Footer = () => {
         <div className={classes.bottom}>
           <div className={classes.bottomLeft}>
             <Link href='/search'>Site Terms of Use</Link>
-            <Link href='/search'>Personal data processing policy</Link>
+            <Link className={classes.privacyPolicyDesktop} href='/search'>
+              Personal data processing policy
+            </Link>
+            <Link className={classes.privacyPolicyMobile} href='/search'>
+              Privacy policy
+            </Link>
           </div>
 
           <small>«Procamion» © 2022–2023</small>

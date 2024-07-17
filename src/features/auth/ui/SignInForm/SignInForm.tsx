@@ -10,7 +10,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 
 import { Button, EmailField, PasswordField } from '@/shared/ui'
 
-import { ROUTE_NAMES } from '../../../../../config'
+import { ROUTE_NAMES } from '@/shared/config'
 import { useCarrierSignIn } from '../../model/useCarrierSignIn'
 import { useShipperSignIn } from '../../model/useShipperSignIn'
 
@@ -21,10 +21,10 @@ const schema = z.object({
   password: z.string().min(6)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 export const SignInForm = () => {
-  const useFormProps = useForm<FormSchemaType>({
+  const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
   const { handleSubmit } = useFormProps
@@ -37,7 +37,7 @@ export const SignInForm = () => {
     setTab(newValue)
   }
 
-  const onFormSubmit = ({ email, password }: FormSchemaType) => {
+  const onFormSubmit = ({ email, password }: FormSchema) => {
     if (tab === 0) {
       shipperSignIn.mutate({ email, password })
     }

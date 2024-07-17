@@ -2,39 +2,76 @@
 
 import Image from 'next/image'
 import { useFormContext } from 'react-hook-form'
+import cn from 'classnames'
 
 import { PlaceAutocomplete } from '@/shared/ui'
 
 import classes from './RouteAutocomplete.module.scss'
 
-type RouteAutocompleteProps = {}
+type RouteAutocompleteProps = {
+  switchPosition?: 'center' | 'end'
+  cityOnly?: boolean
+}
 
-export const RouteAutocomplete = ({}: RouteAutocompleteProps) => {
+export const RouteAutocomplete = ({ switchPosition = 'end', cityOnly }: RouteAutocompleteProps) => {
   const { getValues, setValue } = useFormContext()
 
   const switchLocations = () => {
-    const [departure, departureCountryCode, destination, destinationCountryCode] = getValues([
+    const [
+      departure,
+      departureCountry,
+      departureCity,
+      departureCountryCode,
+      departurePostalCode,
+      arrival,
+      arrivalCountry,
+      arrivalCity,
+      arrivalCountryCode,
+      arrivalPostalCode
+    ] = getValues([
       'departure',
+      'departureCountry',
+      'departureCity',
       'departureCountryCode',
-      'destination',
-      'destinationCountryCode'
+      'departurePostalCode',
+      'arrival',
+      'arrivalCountry',
+      'arrivalCity',
+      'arrivalCountryCode',
+      'arrivalPostalCode'
     ])
 
-    setValue('departure', destination)
-    setValue('destination', departure)
+    setValue('departure', arrival)
+    setValue('arrival', departure)
 
-    setValue('departureCountryCode', destinationCountryCode)
-    setValue('destinationCountryCode', departureCountryCode)
+    setValue('departureCountry', arrivalCountry)
+    setValue('arrivalCountry', departureCountry)
+
+    setValue('departureCity', arrivalCity)
+    setValue('arrivalCity', departureCity)
+
+    setValue('departureCountryCode', arrivalCountryCode)
+    setValue('arrivalCountryCode', departureCountryCode)
+
+    setValue('departurePostalCode', arrivalPostalCode)
+    setValue('arrivalPostalCode', departurePostalCode)
   }
 
   return (
     <div className={classes.routeAutocomplete}>
-      <PlaceAutocomplete name='departure' placeholder='Departure' />
+      <PlaceAutocomplete cityOnly={cityOnly} name='departure' placeholder='Departure' />
 
-      <PlaceAutocomplete name='destination' placeholder='Destination' />
+      <PlaceAutocomplete cityOnly={cityOnly} name='arrival' placeholder='Destination' />
 
-      <button type='button' className={classes.switchButton} onClick={switchLocations}>
-        <Image width={13.9} height={13.8} src='./icons/switch.svg' alt='switch' />
+      <button
+        type='button'
+        className={cn(classes.switchButton, {
+          [classes.switchButtonCenter]: switchPosition === 'center',
+          [classes.switchButtonEnd]: switchPosition === 'end'
+        })}
+        onClick={switchLocations}
+      >
+        <Image width={13.9} height={13.8} src='/icons/switch.svg' alt='switch' />
       </button>
     </div>
   )

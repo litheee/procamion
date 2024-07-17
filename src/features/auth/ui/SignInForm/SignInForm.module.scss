@@ -12,7 +12,7 @@
     margin-top: 34px;
   }
 
-  p:last-of-type {
+  & > p:last-of-type {
     margin-top: 14px;
     text-align: center;
     color: var(--color-gray-200);

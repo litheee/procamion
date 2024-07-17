@@ -41,10 +41,10 @@ const schema = z.object({
   phone: z.string().min(12)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 export const CarrierSignUpForm = () => {
-  const useFormProps = useForm<FormSchemaType>({
+  const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
   const {
@@ -69,7 +69,7 @@ export const CarrierSignUpForm = () => {
     drivingLicenseExpireDate,
     drivingLicenseReceiptDate,
     phone
-  }: FormSchemaType) => {
+  }: FormSchema) => {
     if (!agreement) return
 
     signUp.mutate({
@@ -89,7 +89,7 @@ export const CarrierSignUpForm = () => {
     })
   }
 
-  const onFormError: SubmitErrorHandler<FormSchemaType> = (fields) => {
+  const onFormError: SubmitErrorHandler<FormSchema> = (fields) => {
     const firstStepFields = ['email', 'firstName', 'lastName', 'password', 'agreement']
     const isErrorInFirstStep = Object.keys(fields).some((fieldKey) =>
       firstStepFields.includes(fieldKey)

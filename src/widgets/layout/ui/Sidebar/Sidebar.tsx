@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import cn from 'classnames'
 
-import { ROUTE_NAMES } from '../../../../../config'
+import { ROUTE_NAMES } from '@/shared/config'
 
 import classes from './Sidebar.module.scss'
 import { AvatarIcon } from '../../../../../public/icons/sidebar/Avatar'

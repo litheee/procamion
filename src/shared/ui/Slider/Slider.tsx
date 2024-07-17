@@ -7,16 +7,18 @@ import classes from './Slider.module.scss'
 
 type SliderProps = MuiSliderProps & {
   name: string
+  required?: boolean
   onChange?: (value: number | number[]) => void
 }
 
-export const Slider = ({ name, onChange, defaultValue, ...props }: SliderProps) => {
+export const Slider = ({ name, required, onChange, defaultValue, ...props }: SliderProps) => {
   const { control } = useFormContext()
 
   return (
     <Controller
       name={name}
       control={control}
+      rules={{ required }}
       defaultValue={[0, 0]}
       render={({ field: { value, ...field } }) => {
         return (

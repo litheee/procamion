@@ -10,7 +10,7 @@ type Rules = Omit<
   'disabled' | 'setValueAs' | 'valueAsNumber' | 'valueAsDate'
 >
 
-type TextFieldProps = MuiTextFieldProps & {
+export type TextFieldProps = MuiTextFieldProps & {
   name: string
   rules?: Rules
 }
@@ -19,6 +19,8 @@ export const TextField = ({
   name,
   InputProps,
   rules = { required: true },
+  type,
+  onChange,
   ...props
 }: TextFieldProps) => {
   const { control } = useFormContext()
@@ -29,13 +31,14 @@ export const TextField = ({
       defaultValue=''
       rules={rules}
       control={control}
-      render={({ field: { onChange, value }, fieldState: { error } }) => {
+      render={({ field, fieldState: { error } }) => {
         return (
           <MuiTextField
             fullWidth
             helperText={error && error.message !== 'Required' ? error.message : null}
             error={Boolean(error)}
             variant='outlined'
+            type={type}
             {...props}
             InputProps={{
               ...InputProps,
@@ -46,8 +49,18 @@ export const TextField = ({
                 notchedOutline: 'text-field-fieldset'
               }
             }}
-            value={value}
-            onChange={onChange}
+            value={field.value}
+            onChange={(e) => {
+              if (onChange) {
+                onChange(e)
+              }
+
+              if (type === 'number') {
+                return field.onChange(e.target.value ? parseInt(e.target.value) : '')
+              }
+
+              return field.onChange(e)
+            }}
           />
         )
       }}

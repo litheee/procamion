@@ -1,3 +1,5 @@
+import type { ApplicationStatus } from '@/entities/application'
+
 export type ShipperProfileInfo = {
   first_name: string
   last_name: string
@@ -11,4 +13,10 @@ export type ShipperProfileInfo = {
   phone_number_verified: boolean
   email_verified: boolean
   verified: boolean
+}
+
+export type GetShipperCargoesPayload = {
+  status: ApplicationStatus
+  page: number
+  pageSize: number
 }

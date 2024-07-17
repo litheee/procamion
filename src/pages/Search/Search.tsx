@@ -1,35 +1,56 @@
 'use client'
 
+import { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 
-import { MainSearchPanel } from '@/widgets/search'
 import { CargoesSearchResultList } from '@/widgets/cargo'
+import { RoutesSearchResultList } from '@/widgets/route'
+import { ApplicationSearchFilters, ApplicationSearchFiltersProvider } from '@/widgets/application'
 
 import classes from './Search.module.scss'
 
+type TabValue = 'Cargoes' | 'Routes'
+
 export const SearchPage = () => {
+  const [tab, setTab] = useState<TabValue>('Cargoes')
+
   return (
-    <div>
-      <div className={classes.layout}>
-        <MainSearchPanel />
+    <ApplicationSearchFiltersProvider>
+      <div>
+        <div className={classes.layout}>
+          <div className={classes.filters}>
+            <ApplicationSearchFilters />
+          </div>
 
-        <div className={classes.content}>
-          <Typography variant='h1' fontSize={32} fontWeight={700}>
-            Active requests for transport
-          </Typography>
+          <div className={classes.content}>
+            <Typography variant='h1' fontSize={32} fontWeight={700}>
+              Active requests for transport
+            </Typography>
 
-          <Tabs className={classes.tabs} value={0} onChange={() => {}}>
-            <Tab label='Freight and cargoes' />
-            <Tab label='Routes' />
-          </Tabs>
+            <Tabs
+              className={classes.tabs}
+              value={tab}
+              onChange={(_, tabValue) => {
+                setTab(tabValue)
+              }}
+            >
+              <Tab value='Cargoes' label='Freight and cargoes' />
+              <Tab value='Routes' label='Routes' />
+            </Tabs>
 
-          <div className={classes.cargoesList}>
-            <CargoesSearchResultList />
+            <div className={classes.mobileFilters}>
+              <ApplicationSearchFilters />
+            </div>
+
+            <div className={classes.list}>
+              {tab === 'Cargoes' ? <CargoesSearchResultList /> : null}
+              {tab === 'Routes' ? <RoutesSearchResultList /> : null}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </ApplicationSearchFiltersProvider>
   )
 }

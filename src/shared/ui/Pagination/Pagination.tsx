@@ -2,6 +2,7 @@
 
 import cn from 'classnames'
 import Skeleton from '@mui/material/Skeleton'
+import { useMediaQuery } from '@mui/material'
 
 import { usePagination } from '../../hooks/usePagination'
 
@@ -10,22 +11,24 @@ import Image from 'next/image'
 
 interface PaginationProps {
   currentPage: number
-  totalPages: number
+  totalPages?: number
   isLoading?: boolean
   onPageChange: (page: number) => void
 }
 
 export const Pagination = ({
   currentPage,
-  totalPages,
+  totalPages = 0,
   isLoading,
   onPageChange
 }: PaginationProps) => {
+  const maxWidth760 = useMediaQuery('(max-width:760px)')
+
   const paginationRange = usePagination({
     currentPage,
     totalCount: totalPages,
     pageSize: 1,
-    siblingCount: 2
+    siblingCount: maxWidth760 ? 1 : 2
   })
 
   const isPrevDisabled = currentPage === 1
@@ -46,14 +49,12 @@ export const Pagination = ({
   if (isLoading) {
     return (
       <div className={classes.pagination}>
-        <div className={classes.pagesRow}>
-          {Array.from({ length: 9 }).map((_, idx) => (
-            <Skeleton key={idx} className={classes.buttonSkeleton} height={50} />
-          ))}
-        </div>
+        <Skeleton className={classes.skeleton} height={48} />
       </div>
     )
   }
+
+  if (totalPages === 0) return null
 
   return (
     <div className={classes.pagination}>
@@ -64,7 +65,7 @@ export const Pagination = ({
           })}
           onClick={toPrevPage}
         >
-          <Image width={24} height={24} src='./icons/arrow-left.svg' alt='arrow left' />
+          <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow left' />
 
           <span>Back</span>
         </button>
@@ -104,7 +105,7 @@ export const Pagination = ({
         >
           <span>Next</span>
 
-          <Image width={24} height={24} src='./icons/arrow-left.svg' alt='arrow right' />
+          <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow right' />
         </button>
       </div>
     </div>

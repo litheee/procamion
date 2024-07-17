@@ -48,8 +48,8 @@
   }
 }
 
-.buttonSkeleton {
-  min-width: 50px;
+.skeleton {
+  width: 100%;
 }
 
 .nextButton {
@@ -67,4 +67,46 @@
   font-size: 18px;
   color: var(--color-gray-300);
   cursor: default;
+}
+
+@media screen and (max-width: 760px) {
+  .dots,
+  .button,
+  .navButton {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navButton {
+    justify-content: center;
+    padding: 0;
+
+    span {
+      display: none;
+    }
+  }
+}
+
+@media screen and (max-width: 470px) {
+  .pagesRow {
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .pagesButtons {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .navButton {
+    order: 1;
+
+    &:first-of-type {
+      margin-left: auto;
+    }
+
+    &:last-of-type {
+      margin-right: auto;
+    }
+  }
 }

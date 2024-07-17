@@ -2,6 +2,7 @@
 
 import { FormProvider, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
 import Typography from '@mui/material/Typography'
@@ -20,10 +21,12 @@ const schema = z.object({
   newPasswordConfirm: z.string().min(6)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 export const PasswordChangeForm = () => {
-  const useFormProps = useForm<FormSchemaType>()
+  const useFormProps = useForm<FormSchema>({
+    resolver: zodResolver(schema)
+  })
   const {
     handleSubmit,
     setError,
@@ -45,7 +48,7 @@ export const PasswordChangeForm = () => {
     reset()
   }
 
-  const onFormSubmit = ({ oldPassword, newPassword, newPasswordConfirm }: FormSchemaType) => {
+  const onFormSubmit = ({ oldPassword, newPassword, newPasswordConfirm }: FormSchema) => {
     if (newPassword !== newPasswordConfirm) {
       setError('newPasswordConfirm', {
         message: 'Password mismatch'

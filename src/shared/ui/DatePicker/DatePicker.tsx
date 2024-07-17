@@ -17,9 +17,16 @@ type DatePickerProps = MuiDatePickerProps<Dayjs> & {
   id?: string
   name: string
   placeholder?: string
+  required?: boolean
 }
 
-export const DatePicker = ({ id, name, placeholder, ...props }: DatePickerProps) => {
+export const DatePicker = ({
+  id,
+  name,
+  placeholder,
+  required = true,
+  ...props
+}: DatePickerProps) => {
   const { control } = useFormContext()
 
   return (
@@ -27,7 +34,7 @@ export const DatePicker = ({ id, name, placeholder, ...props }: DatePickerProps)
       name={name}
       control={control}
       defaultValue={null}
-      rules={{ required: true }}
+      rules={{ required }}
       render={({ field: { ref, value, onChange }, fieldState: { error } }) => {
         return (
           <MuiDatePicker
@@ -36,6 +43,16 @@ export const DatePicker = ({ id, name, placeholder, ...props }: DatePickerProps)
               textField: {
                 id,
                 placeholder
+              },
+              desktopPaper: {
+                className: classes.paper
+              },
+              day: {
+                classes: {
+                  root: classes.day,
+                  today: classes.dayToday,
+                  selected: classes.daySelected
+                }
               }
             }}
             format='DD.MM.YYYY'

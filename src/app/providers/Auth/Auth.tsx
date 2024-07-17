@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 
 import { removeHeaderBearerToken, setHeaderBearerToken } from '@/shared/api'
 import { deleteCookie, getCookie } from '@/shared/utils'
-import { ROUTE_NAMES } from '../../../../config'
+import { ROUTE_NAMES } from '@/shared/config'
 
 type AuthContextProps = {
   isAuth: boolean
@@ -45,13 +45,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   const logout = () => {
-    queryClient.removeQueries()
+    router.push(ROUTE_NAMES.SIGN_IN)
+    setAuth(false)
     deleteCookie('accessToken')
     deleteCookie('refreshToken')
     localStorage.removeItem('userRole')
+    queryClient.removeQueries()
     removeHeaderBearerToken()
-    setAuth(false)
-    router.push(ROUTE_NAMES.SIGN_IN)
   }
 
   return (

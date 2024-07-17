@@ -1,12 +1,11 @@
+import Link from 'next/link'
+
 import { Button } from '@/shared/ui'
+import { ROUTE_NAMES } from '@/shared/config'
 
 import classes from './UserEntry.module.scss'
-import Link from 'next/link'
-import { ROUTE_NAMES } from '../../../../../config'
 
-type UserEntryProps = {}
-
-export const UserEntry = ({}: UserEntryProps) => {
+export const UserEntry = () => {
   return (
     <div className={classes.userEntry}>
       <Link href={ROUTE_NAMES.SIGN_UP}>

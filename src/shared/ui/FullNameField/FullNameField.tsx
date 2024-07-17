@@ -23,7 +23,7 @@ export const FullNameField = ({}: FullNameFieldProps) => {
           [classes.error]: Boolean(firstNameError) || Boolean(lastNameError)
         })}
       >
-        <Image width={24} height={24} src='./icons/user.svg' alt='user' />
+        <Image width={24} height={24} src='/icons/user.svg' alt='user' />
       </div>
 
       <div className={classes.fields}>

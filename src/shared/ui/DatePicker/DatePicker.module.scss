@@ -1,6 +1,6 @@
 .datePicker {
   & > div {
-    border: 0.5px solid var(--input-border-color);
+    border: 1px solid var(--input-border-color);
   }
 
   &.error > div {
@@ -13,12 +13,56 @@
 
   input {
     padding: 7px 11px;
-    height: 40px;
+    height: 38px;
     box-sizing: border-box;
 
     &::placeholder {
       opacity: 1;
       color: var(--color-gray-200);
+    }
+  }
+}
+
+.paper {
+  margin-top: 8px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  box-shadow: var(--box-shadow);
+
+  svg {
+    fill: var(--color-black-primary);
+  }
+
+  .day {
+    font-size: 14px;
+    color: var(--color-black-primary);
+
+    &:hover,
+    &:focus {
+      background: color-mix(in srgb, var(--color-primary), transparent 85%);
+    }
+
+    &Selected {
+      background-color: var(--color-primary) !important;
+    }
+
+    &Today {
+      border: 1px solid #d9d9d9 !important;
+    }
+  }
+
+  :global(.MuiPickersYear-root) {
+    button {
+      justify-content: center;
+
+      &:hover,
+      &:focus {
+        background: color-mix(in srgb, var(--color-primary), transparent 85%);
+      }
+
+      &:global(.Mui-selected) {
+        background-color: var(--color-primary);
+      }
     }
   }
 }

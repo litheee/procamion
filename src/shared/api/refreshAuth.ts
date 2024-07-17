@@ -1,7 +1,7 @@
 import type { UserRole } from '@/features/auth'
 import { deleteCookie, getCookie, setCookie } from '../utils'
 import { API, setHeaderBearerToken } from './api'
-import { ROUTE_NAMES } from '../../../config'
+import { ROUTE_NAMES } from '../config'
 
 type AuthTokens = {
   access_token: string

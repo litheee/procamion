@@ -38,10 +38,10 @@ const schema = z.object({
   phone: z.string().min(12)
 })
 
-type FormSchemaType = z.infer<typeof schema>
+type FormSchema = z.infer<typeof schema>
 
 export const ShipperSignUpForm = () => {
-  const useFormProps = useForm<FormSchemaType>({
+  const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
   const {
@@ -65,7 +65,7 @@ export const ShipperSignUpForm = () => {
     country,
     language,
     phone
-  }: FormSchemaType) => {
+  }: FormSchema) => {
     if (!agreement) return
 
     signUp.mutate({
@@ -81,7 +81,7 @@ export const ShipperSignUpForm = () => {
     })
   }
 
-  const onFormError: SubmitErrorHandler<FormSchemaType> = (fields, e) => {
+  const onFormError: SubmitErrorHandler<FormSchema> = (fields, e) => {
     const firstStepFields = [
       'companyName',
       'firstName',

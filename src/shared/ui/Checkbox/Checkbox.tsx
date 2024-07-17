@@ -19,7 +19,7 @@ export const Checkbox = ({ name, className, required = true, ...props }: Checkbo
   return (
     <Controller
       name={name}
-      defaultValue=''
+      defaultValue={false}
       rules={{ required }}
       control={control}
       render={({ field, fieldState: { error } }) => {

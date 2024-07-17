@@ -11,3 +11,9 @@ export const LANGUAGES_OPTIONS = [
   { label: 'Spanish', value: 'Spanish' },
   { label: 'Arabic', value: 'Arabic' }
 ]
+
+export enum Currency {
+  USD = 'USD',
+  EUR = 'EUR',
+  MAD = 'MAD'
+}

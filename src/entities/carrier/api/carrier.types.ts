@@ -1,3 +1,5 @@
+import type { ApplicationStatus } from '@/entities/application'
+
 export type CarrierProfileInfo = {
   first_name: string
   last_name: string
@@ -10,4 +12,10 @@ export type CarrierProfileInfo = {
   driving_license_expiration_date: string
   driving_license: string
   id: string
+}
+
+export type GetCarrierRoutesPayload = {
+  status: ApplicationStatus
+  page: number
+  pageSize: number
 }
