@@ -8,10 +8,8 @@
   display: flex;
   flex-grow: 1;
   gap: 40px;
-  padding-top: 40px;
-  padding-bottom: 80px;
 
-  &.wrapper {
+  &:global(.wrapper) {
     padding-top: 40px;
     padding-bottom: 80px;
   }
