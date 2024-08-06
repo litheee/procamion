@@ -15,7 +15,7 @@ export type CarrierProfileInfo = {
 }
 
 export type GetCarrierRoutesPayload = {
-  status: ApplicationStatus
+  status: ApplicationStatus[]
   page: number
   pageSize: number
 }

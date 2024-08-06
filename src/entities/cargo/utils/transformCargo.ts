@@ -1,11 +1,13 @@
 import type { CargoResponse } from '../types/cargo.types'
 
-export const transfromCargo = (cargo: CargoResponse) => {
+export const transformCargo = (cargo: CargoResponse) => {
   const {
     city_from: departureCity,
     city_to: arrivalCity,
     country_from: departureCountry,
     country_to: arrivalCountry,
+    address_from: departureAddress,
+    address_to: arrivalAddress,
     created_at: createDate,
     currency,
     departure_date: departureDate,
@@ -25,6 +27,8 @@ export const transfromCargo = (cargo: CargoResponse) => {
     departureCountry,
     arrivalCity,
     arrivalCountry,
+    departureAddress,
+    arrivalAddress,
     departureCity,
     departureDate,
     ftlPrice,

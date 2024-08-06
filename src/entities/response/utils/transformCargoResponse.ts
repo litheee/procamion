@@ -1,6 +1,6 @@
 import { CargoResponse } from '../api/response.types'
 
-export const transfromCargoResponse = (response: CargoResponse) => {
+export const transformCargoResponse = (response: CargoResponse) => {
   const { id, created_at: createDate, updated_at: updateDate, carrier, message } = response
 
   return {

@@ -8,41 +8,35 @@ import Skeleton from '@mui/material/Skeleton'
 import { RouteResponseActions } from '@/features/response'
 import { formatDate } from '@/shared/utils'
 import { Pagination } from '@/shared/ui'
+import { useRouteResponses } from '@/entities/response'
 
 import classes from './RoutesResponsesList.module.scss'
 import { AvatarIcon } from '../../../../../public/icons/sidebar/Avatar'
 
 type RoutesResponsesListProps = {
-  status: 'Active' | 'Archived'
+  routeId: string
 }
 
-export const RoutesResponsesList = ({}: RoutesResponsesListProps) => {
+export const RoutesResponsesList = ({ routeId }: RoutesResponsesListProps) => {
   const PAGE_ITEMS_SIZE = status === 'Active' ? 5 : 8
 
-  const routes = [
-    {
-      id: '1',
-      createDate: '2024-07-15T02:01:29.904312Z',
-      updateDate: '2024-07-15T02:01:29.904312Z',
-      commentDate: '2024-07-15T02:01:29.904312Z',
-      firstName: 'Name',
-      lastName: 'Surname',
-      comment:
-        'I would like to sincerely thank Mohammed for the delicate and timely delivery of the cargo. A very cultured and intelligent employee.'
-    }
-  ]
-
   const [page, setPage] = useState(1)
+
+  const { responsesData, isResponsesLoading } = useRouteResponses({
+    routeId,
+    page,
+    pageSize: PAGE_ITEMS_SIZE
+  })
 
   return (
     <div className={classes.routesResponsesList}>
       <ul className={classes.list}>
-        {routes.map((route) => {
+        {responsesData?.responses.map(({ id, shipper, application, createDate, message }) => {
           return (
-            <li key={route.id} className={cn(classes.routeCard, 'card')}>
+            <li key={id} className={cn(classes.routeCard, 'card')}>
               <div className={classes.routeCardTop}>
                 <Typography fontSize={18} fontWeight={700}>
-                  Route ({formatDate(route.createDate)})
+                  Route ({formatDate(application.createDate)})
                 </Typography>
               </div>
 
@@ -54,26 +48,26 @@ export const RoutesResponsesList = ({}: RoutesResponsesListProps) => {
 
                   <div className={classes.responseUserInfo}>
                     <p>
-                      {route.firstName} {route.lastName}
+                      {shipper.first_name} {shipper.last_name}
                     </p>
-                    <p>{formatDate(route.commentDate)}</p>
+                    <p>{formatDate(createDate)}</p>
                   </div>
                 </div>
 
                 <div className={classes.responseComment}>
                   <p>Comment</p>
-                  <p>{route.comment}</p>
+                  <p>{message}</p>
                 </div>
               </div>
 
               <div className={classes.routeResponseActions}>
-                <RouteResponseActions responseId='123' routeId={route.id} />
+                <RouteResponseActions responseId={id} routeId={application.id} />
               </div>
             </li>
           )
         })}
 
-        {false
+        {isResponsesLoading
           ? Array.from({ length: PAGE_ITEMS_SIZE }).map((_, idx) => {
               return (
                 <li key={idx}>
@@ -84,12 +78,17 @@ export const RoutesResponsesList = ({}: RoutesResponsesListProps) => {
           : null}
       </ul>
 
-      {routes && routes.length === 0 && !true ? (
-        <p className='noData'>You have no responses to your cargoes</p>
+      {responsesData && responsesData?.responses.length === 0 ? (
+        <p className='noData'>You have no responses to your route</p>
       ) : null}
 
       <div className={classes.pagination}>
-        <Pagination isLoading={false} currentPage={page} totalPages={100} onPageChange={setPage} />
+        <Pagination
+          isLoading={isResponsesLoading}
+          currentPage={page}
+          totalPages={responsesData?.pagesNumber}
+          onPageChange={setPage}
+        />
       </div>
     </div>
   )

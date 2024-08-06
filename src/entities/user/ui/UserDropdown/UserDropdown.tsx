@@ -15,9 +15,9 @@ import { UserAvatar } from '../UserAvatar/UserAvatar'
 import { ROUTE_NAMES } from '@/shared/config'
 import { useAuth } from '@/shared/hooks/useAuth'
 import { useUser } from '@/shared/hooks/useUser'
+import { LangSelect } from '@/features/lang'
 
 import classes from './UserDropdown.module.scss'
-import { LangSelect } from '@/features/lang'
 
 export const UserDropdown = () => {
   const [isDropdownOpen, setDropdwonOpen] = useState(false)
@@ -35,6 +35,7 @@ export const UserDropdown = () => {
       </Typography>
 
       <Dropdown
+        open={isDropdownOpen}
         onOpenChange={(_, isOpen) => {
           setDropdwonOpen(isOpen)
         }}

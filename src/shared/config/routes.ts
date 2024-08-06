@@ -9,6 +9,7 @@ export const ROUTE_NAMES = {
   PROFILE_APPLICATIONS: '/profile/applications',
   PROFILE_RESPONSES: '/profile/responses',
   PROFILE_SETTINGS: '/profile/settings',
+  PROFILE_OFFERS: '/profile/offers',
 
   SEARCH: '/search'
 } as const
@@ -17,7 +18,8 @@ export const AUTH_ROUTES = [
   ROUTE_NAMES.PROFILE,
   ROUTE_NAMES.PROFILE_APPLICATIONS,
   ROUTE_NAMES.PROFILE_RESPONSES,
-  ROUTE_NAMES.PROFILE_SETTINGS
+  ROUTE_NAMES.PROFILE_SETTINGS,
+  ROUTE_NAMES.PROFILE_OFFERS
 ] as const
 
 export const GUEST_ROUTES = [

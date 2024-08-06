@@ -1,3 +1,4 @@
+import type { ApplicationStatus } from '@/entities/application'
 import type { ResponseList } from '@/shared/api/types'
 import type { Currency } from '@/shared/const/local.const'
 
@@ -16,6 +17,7 @@ export type RouteResponse = {
   ltl_price: number
   ftl_price: number
   currency: Currency
+  status?: ApplicationStatus
 }
 
 export type RoutesListResponse = ResponseList<RouteResponse>

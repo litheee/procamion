@@ -1,9 +1,7 @@
 import { API } from '@/shared/api'
 
-import { transfromCargo, type CargoesListResponse } from '@/entities/cargo'
+import { transformCargo, type CargoesListResponse } from '@/entities/cargo'
 import type { GetShipperCargoesPayload, ShipperProfileInfo } from './shipper.types'
-import { ResponseList } from '@/shared/api/types'
-import { RouteResponse, transfromRouteResponse } from '@/entities/response'
 
 const transformShipper = (Shipper: ShipperProfileInfo) => {
   const {
@@ -44,26 +42,25 @@ export const getShipperProfileInfo = async () => {
 }
 
 export const getShipperCargoes = async ({ page, pageSize, status }: GetShipperCargoesPayload) => {
-  const { data } = await API.get<CargoesListResponse>('/shippers/cargo-applications', {
+  const statuses = status
+    .map((status, idx) => {
+      if (idx === 0) {
+        return `statuses=${status}`
+      }
+
+      return `&statuses=${status}`
+    })
+    .join('')
+
+  const { data } = await API.get<CargoesListResponse>(`/shippers/cargo-applications?${statuses}`, {
     params: {
       page_number: page,
-      page_size: pageSize,
-      statuses: status
+      page_size: pageSize
     }
   })
 
   return {
-    applicationsList: data.content.map(transfromCargo),
-    itemsNumber: data.total_items,
-    pagesNumber: data.total_pages
-  }
-}
-
-export const getShipperResponses = async () => {
-  const { data } = await API.get<ResponseList<RouteResponse>>('/shippers/route-responses')
-
-  return {
-    responses: data.content.map(transfromRouteResponse),
+    applicationsList: data.content.map(transformCargo),
     itemsNumber: data.total_items,
     pagesNumber: data.total_pages
   }

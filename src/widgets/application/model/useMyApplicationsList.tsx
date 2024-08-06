@@ -14,10 +14,10 @@ type UseMyApplicationsListProps = {
 }
 
 const convertStatus = (status: Status) => {
-  if (status === 'Active') return ApplicationStatus.OPEN
-  if (status === 'Completed') return ApplicationStatus.FINISHED
+  if (status === 'Active') return [ApplicationStatus.OPEN, ApplicationStatus.IN_WORK]
+  if (status === 'Completed') return [ApplicationStatus.FINISHED]
 
-  return ApplicationStatus.FINISHED
+  return [ApplicationStatus.FINISHED]
 }
 
 export const useMyApplicationsList = ({ status, page, pageSize }: UseMyApplicationsListProps) => {

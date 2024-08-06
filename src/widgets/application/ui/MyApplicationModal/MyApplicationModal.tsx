@@ -2,10 +2,13 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { ApplicationInfoModal, ApplicationInfoType } from '@/entities/application'
+import { ConfirmWorkDone } from '@/features/application'
 import { CargoCreateEditModal, useCargoDelete } from '@/features/cargo'
 import { RouteCreateEditModal, useRouteDelete } from '@/features/route'
+import { useAppliedReponse } from '@/entities/response'
 import { Button } from '@/shared/ui'
 
 import classes from './MyApplicationModal.module.scss'
@@ -23,6 +26,8 @@ export const MyApplicationModal = ({
   open,
   onClose
 }: MyApplicationModalProps) => {
+  const router = useRouter()
+
   const [isEditModalOpen, setEditModalOpen] = useState(false)
 
   const onActionSuccess = () => {
@@ -38,6 +43,10 @@ export const MyApplicationModal = ({
     onSuccess: onActionSuccess
   })
 
+  const { appliedResponse, isAppliedResponseLoading } = useAppliedReponse({
+    applicationId: application.id
+  })
+
   const deleteApplication = (applicationId: string) => {
     if (type === 'Cargo') {
       deleteCargo(applicationId)
@@ -48,46 +57,59 @@ export const MyApplicationModal = ({
     }
   }
 
+  const toOffersPage = () => {
+    router.push(`/profile/offers/${application.id}`)
+  }
+
   return (
     <>
       <ApplicationInfoModal
         title={type}
         application={application}
         open={open}
+        grayBox={Boolean(appliedResponse)}
         slots={{
-          bottom: (
-            <div className={classes.bottom}>
-              <button className={classes.offersButton}>
-                You have 5 offers{' '}
-                <Image width={12} height={12} src='/icons/arrow-right.svg' alt='arrow right' />
-              </button>
+          bottom:
+            appliedResponse && !isAppliedResponseLoading ? (
+              <ConfirmWorkDone
+                applicationId={application.id}
+                message={appliedResponse.message}
+                user={appliedResponse.user}
+                onSuccess={onClose}
+              />
+            ) : (
+              <div className={classes.bottom}>
+                <button className={classes.offersButton} onClick={toOffersPage}>
+                  Your offers{' '}
+                  <Image width={12} height={12} src='/icons/arrow-right.svg' alt='arrow right' />
+                </button>
 
-              <div className={classes.actions}>
-                <Button
-                  type='button'
-                  size='small'
-                  color='secondary'
-                  onClick={() => {
-                    setEditModalOpen(true)
-                  }}
-                >
-                  Edit
-                </Button>
+                <div className={classes.actions}>
+                  <Button
+                    type='button'
+                    size='small'
+                    color='secondary'
+                    onClick={() => {
+                      setEditModalOpen(true)
+                    }}
+                  >
+                    Edit
+                  </Button>
 
-                <Button
-                  isLoading={isCargoDeleting || isRouteDeleting}
-                  type='button'
-                  size='small'
-                  color='error'
-                  onClick={() => {
-                    deleteApplication(application.id)
-                  }}
-                >
-                  Delete
-                </Button>
+                  <Button
+                    isLoading={isCargoDeleting || isRouteDeleting}
+                    type='button'
+                    size='small'
+                    color='error'
+                    onClick={() => {
+                      deleteApplication(application.id)
+                    }}
+                  >
+                    Delete
+                  </Button>
+                </div>
               </div>
-            </div>
-          )
+            )
         }}
         onClose={onClose}
       />

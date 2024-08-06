@@ -15,7 +15,8 @@ export const transformRoute = (route: RouteResponse) => {
     ltl_price: ltlPrice,
     number_of_pallets: palletsNumber,
     temperature,
-    updated_at: updateDate
+    updated_at: updateDate,
+    status
   } = route
 
   return {
@@ -32,6 +33,7 @@ export const transformRoute = (route: RouteResponse) => {
     ltlPrice,
     palletsNumber,
     temperature,
-    updateDate
+    updateDate,
+    status
   }
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { Button } from '@/shared/ui'
 import { useChooseRouteResponse } from '../../model/useChooseRouteResponse'
@@ -14,9 +15,15 @@ type RouteResponseActionsProps = {
 }
 
 export const RouteResponseActions = ({ responseId, routeId }: RouteResponseActionsProps) => {
+  const router = useRouter()
+
   const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
 
-  const { mutate: acceptResponse, isPending: isResponseAccepting } = useChooseRouteResponse()
+  const { mutate: acceptResponse, isPending: isResponseAccepting } = useChooseRouteResponse({
+    onSuccess: () => {
+      router.push('/profile/applications')
+    }
+  })
 
   return (
     <div className={classes.routeResponseActions}>

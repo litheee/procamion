@@ -5,10 +5,12 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Typography from '@mui/material/Typography'
 import Skeleton from '@mui/material/Skeleton'
+import { useRouter } from 'next/navigation'
 
 import { Pagination } from '@/shared/ui'
 import { ApplicationInfo, type ApplicationInfoType } from '@/entities/application'
 import { MyApplicationModal } from '../MyApplicationModal/MyApplicationModal'
+import { CargoStatusBadge } from '@/entities/cargo'
 
 import { formatDate } from '@/shared/utils'
 import { useMyApplicationsList } from '../../model/useMyApplicationsList'
@@ -23,11 +25,12 @@ type MyApplicationsListProps = {
 }
 
 export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
-  const PAGE_ITEMS_SIZE = 2
+  const PAGE_ITEMS_SIZE = 4
 
   const [selectedApplication, setSelectedApplication] = useState<ApplicationInfoType>()
   const [page, setPage] = useState(1)
 
+  const router = useRouter()
   const { userRole } = useUser()
   const { data: myApplicationsData, isLoading: isMyApplicationsLoading } = useMyApplicationsList({
     page,
@@ -41,7 +44,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
   ) => {
     e.stopPropagation()
 
-    console.log(applicationId)
+    router.push(`/profile/offers/${applicationId}`)
   }
 
   return (
@@ -66,6 +69,10 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                             {userRole === 'CARRIER' ? 'Route' : 'Cargo'} (
                             {formatDate(application.createDate)})
                           </Typography>
+
+                          {userRole === 'SHIPPER' && application?.status ? (
+                            <CargoStatusBadge status={application.status} />
+                          ) : null}
                         </div>
                       ),
                       bottom: (
@@ -76,7 +83,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                               toOffersPage(e, application.id)
                             }}
                           >
-                            You have 5 offers{' '}
+                            Your offers{' '}
                             <Image
                               width={12}
                               height={12}

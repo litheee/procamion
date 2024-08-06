@@ -6,103 +6,89 @@ import Skeleton from '@mui/material/Skeleton'
 import Typography from '@mui/material/Typography'
 
 import { Pagination } from '@/shared/ui'
-import { ApplicationInfo, type ApplicationInfoType } from '@/entities/application'
 import { CargoResponseActions } from '@/features/response'
 import { formatDate } from '@/shared/utils'
+import { useCargoResponses } from '@/entities/response'
 
 import classes from './CargoesResponsesList.module.scss'
+import { AvatarIcon } from '../../../../../public/icons/sidebar/Avatar'
 
 type CargoesResponsesListProps = {
-  status: 'Active' | 'Archived'
+  cargoId: string
 }
 
-export const CargoesResponsesList = ({ status }: CargoesResponsesListProps) => {
-  const PAGE_ITEMS_SIZE = status === 'Active' ? 5 : 8
-
-  const cargoes = [
-    {
-      id: '182e26cc-a5f5-4064-aedb-d9058a9a6edd',
-      createDate: '2024-07-06T18:46:36.098507Z',
-      updateDate: '2024-07-15T04:15:21.634259Z',
-      status: 'OPEN' as const,
-      comment:
-        'long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment long comment ',
-      departureCountry: 'Russia',
-      arrivalCountry: 'Mexico',
-      departureCity: 'Sankt-Peterburg',
-      arrivalCity: 'Cancún',
-      departureDate: '2024-07-07',
-      temperature: 10,
-      palletsNumber: 19,
-      ltlPrice: 106,
-      ftlPrice: 2000,
-      currency: 'USD' as const
-    },
-    {
-      id: '674084f2-f8d0-4e47-8d20-ef25cc8aaccd',
-      createDate: '2024-07-15T02:01:29.904312Z',
-      updateDate: '2024-07-15T02:01:29.904312Z',
-      status: 'OPEN' as const,
-      comment: 'Testing comment',
-      departureCountry: 'Russia',
-      arrivalCountry: 'Russia',
-      departureCity: 'Sankt-Peterburg',
-      arrivalCity: 'Zelenograd',
-      departureDate: '2024-07-16',
-      temperature: 20,
-      palletsNumber: 19,
-      ltlPrice: 50000,
-      ftlPrice: 2000,
-      currency: 'USD' as const
-    }
-  ] as ApplicationInfoType[]
+export const CargoesResponsesList = ({ cargoId }: CargoesResponsesListProps) => {
+  const PAGE_ITEMS_SIZE = 5
 
   const [page, setPage] = useState(1)
+
+  const { responsesData, isResponsesLoading } = useCargoResponses({
+    cargoId,
+    page,
+    pageSize: PAGE_ITEMS_SIZE
+  })
 
   return (
     <div className={classes.cargoesResponsesList}>
       <ul className={classes.list}>
-        {cargoes.map((cargo) => {
+        {responsesData?.responses.map(({ id, createDate, carrier, message, application }) => {
           return (
-            <li key={cargo.id} className={cn(classes.cargoCard, 'card')}>
-              <ApplicationInfo
-                application={cargo}
-                slots={{
-                  top: (
-                    <div className={classes.cargoCardTop}>
-                      <Typography fontSize={18} fontWeight={700}>
-                        Cargo ({formatDate(cargo.createDate)})
-                      </Typography>
-                    </div>
-                  ),
-                  bottom: (
-                    <div className={classes.cargoResponseActions}>
-                      <CargoResponseActions responseId='123' cargoId={cargo.id} />
-                    </div>
-                  )
-                }}
-              />
+            <li key={id} className={cn(classes.cargoCard, 'card')}>
+              <div className={classes.cargoCardTop}>
+                <Typography fontSize={18} fontWeight={700}>
+                  Cargo ({formatDate(application.createDate)})
+                </Typography>
+              </div>
+
+              <div className={classes.responseBody}>
+                <div className={classes.responseUser}>
+                  <div className={classes.responseUserAvatar}>
+                    <AvatarIcon />
+                  </div>
+
+                  <div className={classes.responseUserInfo}>
+                    <p>
+                      {carrier.first_name} {carrier.last_name}
+                    </p>
+                    <p>{formatDate(createDate)}</p>
+                  </div>
+                </div>
+
+                <div className={classes.responseComment}>
+                  <p>Comment</p>
+                  <p>{message}</p>
+                </div>
+              </div>
+
+              <div className={classes.cargoResponseActions}>
+                <CargoResponseActions responseId={id} cargoId={application.id} />
+              </div>
             </li>
           )
         })}
 
-        {false
+        {isResponsesLoading
           ? Array.from({ length: PAGE_ITEMS_SIZE }).map((_, idx) => {
               return (
                 <li key={idx}>
-                  <Skeleton height={status === 'Active' ? 215 : 103} />
+                  <Skeleton height={215} />
                 </li>
               )
             })
           : null}
       </ul>
 
-      {cargoes && cargoes.length === 0 && !true ? (
-        <p className='noData'>You have no responses to your routes</p>
+      {responsesData && responsesData.responses.length === 0 ? (
+        <p className='noData'>You have no responses to your cargo</p>
       ) : null}
 
       <div className={classes.pagination}>
-        <Pagination isLoading={false} currentPage={page} totalPages={100} onPageChange={setPage} />
+        <Pagination
+          isLoading={isResponsesLoading}
+          currentPage={page}
+          totalPages={responsesData?.pagesNumber}
+          onPageChange={setPage}
+        />
       </div>
     </div>
   )

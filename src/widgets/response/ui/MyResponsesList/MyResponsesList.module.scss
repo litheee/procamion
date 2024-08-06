@@ -1,0 +1,35 @@
+.applicationsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.applicationCard {
+  padding: 16px 24px 8px 24px;
+}
+
+.applicationCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.applicationCardBottom {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.pagination {
+  margin-top: auto;
+  padding-top: 32px;
+}
+
+@media screen and (max-width: 500px) {
+  .applicationCard {
+    padding: 16px 10px 8px 16px;
+  }
+}

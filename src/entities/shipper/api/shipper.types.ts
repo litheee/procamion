@@ -16,7 +16,7 @@ export type ShipperProfileInfo = {
 }
 
 export type GetShipperCargoesPayload = {
-  status: ApplicationStatus
+  status: ApplicationStatus[]
   page: number
   pageSize: number
 }

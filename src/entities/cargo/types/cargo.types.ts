@@ -9,6 +9,8 @@ export type CargoResponse = {
   description: string
   status: ApplicationStatus
   type: ApplicationLoadType
+  address_from?: string
+  address_to?: string
   country_from: string
   country_to: string
   city_from: string

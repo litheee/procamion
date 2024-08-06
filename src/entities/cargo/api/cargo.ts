@@ -1,6 +1,6 @@
 import { API } from '@/shared/api'
 
-import { transfromCargo } from '../utils/transformCargo'
+import { transformCargo } from '../utils/transformCargo'
 
 import type { CargoesListResponse } from '../types/cargo.types'
 import type { GetCargoesListPayload } from './cargo.types'
@@ -39,7 +39,7 @@ export const getCargoesList = async ({
   })
 
   return {
-    cargoesList: data.content.map(transfromCargo),
+    cargoesList: data.content.map(transformCargo),
     itemsNumber: data.total_items,
     pagesNumber: data.total_pages
   }

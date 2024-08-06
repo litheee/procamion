@@ -9,7 +9,7 @@ import type { ApplicationStatus } from '@/entities/application'
 type UseCarrierRoutesProps = {
   page: number
   pageSize: number
-  status: ApplicationStatus
+  status: ApplicationStatus[]
   enabled: boolean
 }
 
