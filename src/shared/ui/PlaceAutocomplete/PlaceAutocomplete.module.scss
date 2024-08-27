@@ -1,4 +1,6 @@
 .placeAutocomplete {
+  position: relative;
+
   :global(.text-field-root) {
     position: relative;
     border: none;
@@ -47,4 +49,15 @@
   .hiddenField {
     display: none;
   }
+}
+
+.clearButton {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  top: 50%;
+  margin-top: -9px;
+  right: 15px;
+  z-index: 50;
+  cursor: pointer;
 }

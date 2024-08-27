@@ -29,7 +29,7 @@ export const Sidebar = () => {
   return (
     <aside className={classes.sidebar}>
       <ul>
-        {sections.map(({ label, href, icon }) => {
+        {sections.map(({ label, href, icon }, idx) => {
           return (
             <li
               key={label}
@@ -41,6 +41,15 @@ export const Sidebar = () => {
                 {icon}
                 {label}
               </Link>
+
+              <div
+                className={cn(classes.activeLine, {
+                  [classes.linkActive]: pathname === href
+                })}
+                style={{
+                  top: `${100 + idx * 67}px`
+                }}
+              />
             </li>
           )
         })}

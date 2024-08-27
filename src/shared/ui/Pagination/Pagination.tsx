@@ -58,17 +58,23 @@ export const Pagination = ({
 
   return (
     <div className={classes.pagination}>
-      <div className={classes.pagesRow}>
-        <button
-          className={cn(classes.navButton, {
-            [classes.buttonDisabled]: isPrevDisabled
-          })}
-          onClick={toPrevPage}
-        >
-          <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow left' />
+      <div
+        className={cn(classes.pagesRow, {
+          [classes.onePage]: totalPages === 1
+        })}
+      >
+        {totalPages > 1 ? (
+          <button
+            className={cn(classes.navButton, {
+              [classes.buttonDisabled]: isPrevDisabled
+            })}
+            onClick={toPrevPage}
+          >
+            <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow left' />
 
-          <span>Back</span>
-        </button>
+            <span>Back</span>
+          </button>
+        ) : null}
 
         <div className={classes.pagesButtons}>
           {paginationRange?.map((pageNumber, idx) => {
@@ -97,16 +103,18 @@ export const Pagination = ({
           })}
         </div>
 
-        <button
-          className={cn(classes.navButton, classes.nextButton, {
-            [classes.buttonDisabled]: isNextDisabled
-          })}
-          onClick={toNextPage}
-        >
-          <span>Next</span>
+        {totalPages > 1 ? (
+          <button
+            className={cn(classes.navButton, classes.nextButton, {
+              [classes.buttonDisabled]: isNextDisabled
+            })}
+            onClick={toNextPage}
+          >
+            <span>Next</span>
 
-          <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow right' />
-        </button>
+            <Image width={24} height={24} src='/icons/arrow-left.svg' alt='arrow right' />
+          </button>
+        ) : null}
       </div>
     </div>
   )

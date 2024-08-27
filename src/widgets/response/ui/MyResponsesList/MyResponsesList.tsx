@@ -10,6 +10,7 @@ import { ApplicationInfo, ApplicationInfoModal, ApplicationInfoType } from '@/en
 import { ResponseEdit } from '@/features/response'
 
 import { useMyResponses } from '@/entities/response'
+import { useResponseDelete } from '@/features/response'
 import { useUser } from '@/shared/hooks/useUser'
 import { formatDate } from '@/shared/utils'
 
@@ -45,13 +46,29 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
     status
   })
 
+  const { deleteResponse, inProcess: deletingResponseInProgress } = useResponseDelete({
+    onSuccess: () => {
+      setSelectedResponse(undefined)
+    }
+  })
+
   return (
     <>
       <ul className={classes.applicationsList}>
         {responses && !isResponsesLoaidng
           ? responses.map(({ id, createDate, application, message }) => {
               return (
-                <li key={id} className={cn(classes.applicationCard, 'card')}>
+                <li
+                  key={id}
+                  className={cn(classes.applicationCard, 'card')}
+                  onClick={() => {
+                    setSelectedResponse({
+                      id,
+                      message,
+                      application
+                    })
+                  }}
+                >
                   <ApplicationInfo
                     application={application}
                     slots={{
@@ -82,12 +99,9 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                             type='button'
                             size='small'
                             color='error'
+                            isLoading={deletingResponseInProgress}
                             onClick={() => {
-                              setSelectedResponse({
-                                id,
-                                message,
-                                application
-                              })
+                              deleteResponse(id)
                             }}
                           >
                             Delete
@@ -128,6 +142,9 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                 responseId={selectedResponse.id}
                 comment={selectedResponse.message}
                 onResponseEdit={() => {
+                  setSelectedResponse(undefined)
+                }}
+                onEditCancel={() => {
                   setSelectedResponse(undefined)
                 }}
               />

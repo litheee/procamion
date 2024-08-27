@@ -1,6 +1,6 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
 import { useUser } from '@/shared/hooks/useUser'
@@ -14,10 +14,22 @@ type UseResponseDeleteProps = {
 }
 
 export const useResponseDelete = ({ onSuccess }: UseResponseDeleteProps) => {
+  const queryClient = useQueryClient()
+
   const { userRole } = useUser()
 
   const onResponseDeleteSuccess = () => {
     toast.success('Your response has been successfully deleted')
+
+    if (userRole === 'CARRIER') {
+      queryClient.invalidateQueries({
+        queryKey: ['carrier-responses']
+      })
+    } else {
+      queryClient.invalidateQueries({
+        queryKey: ['shipper-responses']
+      })
+    }
 
     onSuccess()
   }

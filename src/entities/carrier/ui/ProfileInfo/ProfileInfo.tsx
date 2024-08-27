@@ -20,6 +20,11 @@ export const CarrierProfileInfo = ({ onProfileEdit }: ProfileInfoProps) => {
 
   const { firstName, lastName, city, country, drivingLicense, email, language, phone } = carrier
 
+  const phoneFormatted = `${phone.slice(0, -10)}-${phone.slice(-10, -7)}-${phone.slice(
+    -7,
+    -4
+  )}-${phone.slice(-4)}`
+
   const personalInfo = [
     { label: 'Language', value: language },
     { label: 'Driving license', value: drivingLicense.number },
@@ -36,7 +41,7 @@ export const CarrierProfileInfo = ({ onProfileEdit }: ProfileInfoProps) => {
   const contactData = [
     { label: 'Country', value: country },
     { label: 'City', value: city },
-    { label: 'Phone number', value: phone },
+    { label: 'Phone number', value: phoneFormatted },
     { label: 'Email', value: email }
   ]
 

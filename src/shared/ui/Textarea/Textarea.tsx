@@ -21,7 +21,9 @@ export const Textarea = ({
   className,
   ...props
 }: TextareaProps) => {
-  const { control } = useFormContext()
+  const { control, watch } = useFormContext()
+
+  const valueLength = watch(name) ? watch(name).length : 0
 
   return (
     <Controller
@@ -39,7 +41,13 @@ export const Textarea = ({
               {...props}
               {...field}
             />
-            {!field.value ? <div className={classes.maxSymbols}>{maxLength} Max</div> : null}
+            {valueLength === 0 ? (
+              <div className={classes.maxSymbols}>{maxLength} Max</div>
+            ) : (
+              <div className={classes.maxSymbols}>
+                {valueLength} / {maxLength}
+              </div>
+            )}
           </div>
         )
       }}

@@ -3,10 +3,11 @@
   max-width: 1315px;
   width: 100%;
   margin: 0 auto;
-  padding: 0 15px;
+  padding: 0 60px;
 
-  @media screen and (max-width: 1345px) {
+  @media screen and (max-width: 1440px) {
     box-sizing: border-box;
+    padding: 0 15px;
   }
 }
 

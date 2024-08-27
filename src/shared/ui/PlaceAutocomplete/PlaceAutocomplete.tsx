@@ -32,6 +32,7 @@ export const PlaceAutocomplete = ({
 
   const { error } = getFieldState(name)
   const countryCode = watch(`${name}CountryCode`)
+  const addressWatch = watch(name)
 
   const { ref: materialRef } = usePlacesWidget({
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
@@ -51,10 +52,12 @@ export const PlaceAutocomplete = ({
     options: {
       // locality - city
       types: cityOnly ? ['locality', 'country'] : ['address']
-    }
+    },
+    language: 'en'
   })
 
   const clearFields = () => {
+    setValue(name, '')
     setValue(`${name}Country`, '')
     setValue(`${name}CountryCode`, '')
     setValue(`${name}City`, '')
@@ -90,6 +93,12 @@ export const PlaceAutocomplete = ({
           }
         }}
       />
+
+      {addressWatch ? (
+        <button className={classes.clearButton} onClick={clearFields}>
+          <Image width={18} height={18} src='/icons/cross-circle.svg' alt='close' />
+        </button>
+      ) : null}
 
       <TextField
         rules={{ required: false }}

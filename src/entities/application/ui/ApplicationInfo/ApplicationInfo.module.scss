@@ -94,7 +94,7 @@ p.columnTitle {
   }
 }
 
-@container infoContainer (width < 800px) {
+@container infoContainer (width < 790px) {
   .applicationInfo {
     grid-template-columns: 1fr 1fr 0.75fr;
     grid-template-rows: 1fr 1fr;

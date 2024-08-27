@@ -78,8 +78,13 @@ export const CargoCreateEditModal = ({
     formState: { errors },
     clearErrors,
     resetField,
-    reset
+    reset,
+    watch,
+    setValue
   } = useFormProps
+
+  const palletsNumberWatch = watch('palletsNumber')
+  const ltlPriceWatch = watch('ltlPrice')
 
   const locationErrors = [
     errors.departureCity,
@@ -136,6 +141,15 @@ export const CargoCreateEditModal = ({
       palletsNumber
     })
   }, [cargo])
+
+  useEffect(() => {
+    if (!ltlPriceWatch || !palletsNumberWatch) {
+      setValue('totalPrice', '')
+      return
+    }
+
+    setValue('totalPrice', String(palletsNumberWatch * Number(ltlPriceWatch)))
+  }, [palletsNumberWatch, ltlPriceWatch])
 
   const onFormSubmit = ({
     departure,
@@ -278,21 +292,24 @@ export const CargoCreateEditModal = ({
             <div className={classes.temperatureAndPallets}>
               {tab === 'LTL' ? (
                 <FormControl>
-                  <InputLabel className={classes.label} htmlFor='departureDate'>
+                  <InputLabel className={classes.label} htmlFor='palletsNumber'>
                     Number of pallets
                   </InputLabel>
 
                   <div className={classes.temperatureFieldRow}>
-                    <TextField type='number' name='palletsNumber' placeholder='19' />
+                    <TextField
+                      id='palletsNumber'
+                      type='number'
+                      name='palletsNumber'
+                      placeholder='19'
+                    />
                     <span>pallet</span>
                   </div>
                 </FormControl>
               ) : null}
 
               <FormControl>
-                <InputLabel className={classes.label} htmlFor='departureDate'>
-                  Temperature mode
-                </InputLabel>
+                <InputLabel className={classes.label}>Temperature mode</InputLabel>
 
                 <div className={classes.temperatureFieldRow}>
                   <Counter name='temperature' minValue={-20} maxValue={100} placeholder='+ 8' />
@@ -304,13 +321,18 @@ export const CargoCreateEditModal = ({
             <div className={classes.price}>
               {tab === 'FTL' ? (
                 <FormControl>
-                  <InputLabel className={classes.label} htmlFor='departureDate'>
+                  <InputLabel className={classes.label} htmlFor='ftlPrice'>
                     The price
                   </InputLabel>
 
                   <div className={classes.priceFieldRow}>
                     <span>FTL</span>
-                    <TextField className={classes.priceField} name='ftlPrice' placeholder='1000' />
+                    <TextField
+                      className={classes.priceField}
+                      id='ftlPrice'
+                      name='ftlPrice'
+                      placeholder='1000'
+                    />
                     <CurrencySelect />
                   </div>
                 </FormControl>
@@ -319,7 +341,7 @@ export const CargoCreateEditModal = ({
               {tab === 'LTL' ? (
                 <>
                   <FormControl>
-                    <InputLabel className={classes.label} htmlFor='departureDate'>
+                    <InputLabel className={classes.label} htmlFor='ltlPrice'>
                       The price
                     </InputLabel>
 
@@ -327,6 +349,7 @@ export const CargoCreateEditModal = ({
                       <span>LTL</span>
                       <TextField
                         className={classes.priceField}
+                        id='ltlPrice'
                         name='ltlPrice'
                         placeholder='1000 / pal'
                       />
@@ -335,11 +358,11 @@ export const CargoCreateEditModal = ({
                   </FormControl>
 
                   <FormControl className={classes.totalPrice}>
-                    <InputLabel className={classes.label} htmlFor='departureDate'>
+                    <InputLabel className={classes.label} htmlFor='totalPrice'>
                       Total price
                     </InputLabel>
 
-                    <TextField name='totalPrice' placeholder='19 000' />
+                    <TextField id='totalPrice' name='totalPrice' placeholder='19 000' />
                   </FormControl>
                 </>
               ) : null}
@@ -356,14 +379,26 @@ export const CargoCreateEditModal = ({
             </FormControl>
           </div>
 
-          <Button
-            isLoading={cargoCreateInProcess || cargoEditInProcess}
-            type='submit'
-            startIcon={<PlusIcon />}
-            size='small'
-          >
-            {inEditMode ? 'Edit' : 'Create'}
-          </Button>
+          {inEditMode ? (
+            <div className={classes.actions}>
+              <Button isLoading={cargoEditInProcess} type='button' color='secondary' size='small'>
+                Cancel
+              </Button>
+
+              <Button isLoading={cargoEditInProcess} type='submit' size='small'>
+                Save
+              </Button>
+            </div>
+          ) : (
+            <Button
+              isLoading={cargoCreateInProcess}
+              type='submit'
+              startIcon={<PlusIcon />}
+              size='small'
+            >
+              Create
+            </Button>
+          )}
         </form>
       </FormProvider>
     </Modal>

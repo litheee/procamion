@@ -51,7 +51,7 @@ function handleAxiosError(err: AxiosError<Error>) {
   const errorCode = err.response.status
   const { detail } = err.response.data
 
-  if (errorCode === 403) {
+  if (errorCode === 403 || errorCode === 500) {
     window.location.href = '/server-error'
     return
   }

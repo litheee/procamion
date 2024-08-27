@@ -19,6 +19,11 @@ export const ShipperProfileInfo = ({ onProfileEdit }: ProfileInfoProps) => {
 
   const { firstName, lastName, language, companyName, country, city, phone, email } = shipper
 
+  const phoneFormatted = `${phone.slice(0, -10)}-${phone.slice(-10, -7)}-${phone.slice(
+    -7,
+    -4
+  )}-${phone.slice(-4)}`
+
   const personalInfo = [
     { label: 'Language', value: language },
     { label: 'Company', value: companyName }
@@ -27,7 +32,7 @@ export const ShipperProfileInfo = ({ onProfileEdit }: ProfileInfoProps) => {
   const contactData = [
     { label: 'Country', value: country },
     { label: 'City', value: city },
-    { label: 'Phone number', value: phone },
+    { label: 'Phone number', value: phoneFormatted },
     { label: 'Email', value: email }
   ]
 

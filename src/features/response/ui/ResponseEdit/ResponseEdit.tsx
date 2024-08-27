@@ -17,6 +17,7 @@ type ResponseEditProps = {
   responseId: string
   comment: string
   onResponseEdit: () => void
+  onEditCancel: () => void
 }
 
 const schema = z.object({
@@ -25,7 +26,12 @@ const schema = z.object({
 
 type FormSchema = z.infer<typeof schema>
 
-export const ResponseEdit = ({ responseId, comment, onResponseEdit }: ResponseEditProps) => {
+export const ResponseEdit = ({
+  responseId,
+  comment,
+  onResponseEdit,
+  onEditCancel
+}: ResponseEditProps) => {
   const { editResponse, inProcess: editingResponseInProgress } = useResponseEdit({
     onSuccess: onResponseEdit
   })
@@ -63,15 +69,21 @@ export const ResponseEdit = ({ responseId, comment, onResponseEdit }: ResponseEd
 
         <div className={classes.actions}>
           <Button
-            isLoading={editingResponseInProgress}
-            type='submit'
+            type='button'
             color='secondary'
             size='small'
+            onClick={() => {
+              onEditCancel()
+            }}
           >
-            Edit
+            Cancel
           </Button>
 
-          <Button
+          <Button isLoading={editingResponseInProgress} type='submit' color='success' size='small'>
+            Save
+          </Button>
+
+          {/* <Button
             isLoading={deletingResponseInProgress}
             type='button'
             color='error'
@@ -81,7 +93,7 @@ export const ResponseEdit = ({ responseId, comment, onResponseEdit }: ResponseEd
             }}
           >
             Delete
-          </Button>
+          </Button> */}
         </div>
       </form>
     </FormProvider>

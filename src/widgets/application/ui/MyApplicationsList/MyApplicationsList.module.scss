@@ -7,6 +7,10 @@
 .applicationCard {
   padding: 16px 24px 8px 24px;
   cursor: pointer;
+
+  &.applicationFinished {
+    padding-bottom: 16px;
+  }
 }
 
 .applicationCardTop {

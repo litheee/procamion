@@ -300,14 +300,26 @@ export const RouteCreateEditModal = ({
             </FormControl>
           </div>
 
-          <Button
-            isLoading={routeCreateInProcess || routeEditInProcess}
-            type='submit'
-            startIcon={<PlusIcon />}
-            size='small'
-          >
-            {inEditMode ? 'Edit' : 'Create'}
-          </Button>
+          {inEditMode ? (
+            <div className={classes.actions}>
+              <Button isLoading={routeEditInProcess} type='button' color='secondary' size='small'>
+                Cancel
+              </Button>
+
+              <Button isLoading={routeEditInProcess} type='submit' size='small'>
+                Save
+              </Button>
+            </div>
+          ) : (
+            <Button
+              isLoading={routeCreateInProcess}
+              type='submit'
+              startIcon={<PlusIcon />}
+              size='small'
+            >
+              Create
+            </Button>
+          )}
         </form>
       </FormProvider>
     </Modal>

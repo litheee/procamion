@@ -4,7 +4,11 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 
-import { ApplicationInfoModal, ApplicationInfoType } from '@/entities/application'
+import {
+  ApplicationInfoModal,
+  ApplicationInfoType,
+  ApplicationStatus
+} from '@/entities/application'
 import { ConfirmWorkDone } from '@/features/application'
 import { CargoCreateEditModal, useCargoDelete } from '@/features/cargo'
 import { RouteCreateEditModal, useRouteDelete } from '@/features/route'
@@ -61,6 +65,8 @@ export const MyApplicationModal = ({
     router.push(`/profile/offers/${application.id}`)
   }
 
+  const isApplicationFinished = application.status === ApplicationStatus.FINISHED
+
   return (
     <>
       <ApplicationInfoModal
@@ -69,7 +75,7 @@ export const MyApplicationModal = ({
         open={open}
         grayBox={Boolean(appliedResponse)}
         slots={{
-          bottom:
+          bottom: !isApplicationFinished ? (
             appliedResponse && !isAppliedResponseLoading ? (
               <ConfirmWorkDone
                 applicationId={application.id}
@@ -110,6 +116,7 @@ export const MyApplicationModal = ({
                 </div>
               </div>
             )
+          ) : null
         }}
         onClose={onClose}
       />

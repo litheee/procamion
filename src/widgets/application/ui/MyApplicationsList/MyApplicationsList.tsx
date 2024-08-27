@@ -8,7 +8,11 @@ import Skeleton from '@mui/material/Skeleton'
 import { useRouter } from 'next/navigation'
 
 import { Pagination } from '@/shared/ui'
-import { ApplicationInfo, type ApplicationInfoType } from '@/entities/application'
+import {
+  ApplicationInfo,
+  ApplicationStatus,
+  type ApplicationInfoType
+} from '@/entities/application'
 import { MyApplicationModal } from '../MyApplicationModal/MyApplicationModal'
 import { CargoStatusBadge } from '@/entities/cargo'
 
@@ -52,10 +56,14 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
       <ul className={classes.applicationsList}>
         {myApplicationsData && !isMyApplicationsLoading
           ? myApplicationsData.applicationsList.map((application) => {
+              const isApplicationFinished = application.status === ApplicationStatus.FINISHED
+
               return (
                 <li
                   key={application.id}
-                  className={cn(classes.applicationCard, 'card')}
+                  className={cn(classes.applicationCard, 'card', {
+                    [classes.applicationFinished]: isApplicationFinished
+                  })}
                   onClick={() => {
                     setSelectedApplication(application)
                   }}
@@ -75,7 +83,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                           ) : null}
                         </div>
                       ),
-                      bottom: (
+                      bottom: !isApplicationFinished ? (
                         <div className={classes.applicationCardBottom}>
                           <button
                             className={classes.offersButton}
@@ -92,7 +100,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                             />
                           </button>
                         </div>
-                      )
+                      ) : null
                     }}
                   />
                 </li>
