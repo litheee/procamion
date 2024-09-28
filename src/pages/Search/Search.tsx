@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Typography from '@mui/material/Typography'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
+import { useSearchParams } from 'next/navigation'
 
 import { CargoesSearchResultList } from '@/widgets/cargo'
 import { RoutesSearchResultList } from '@/widgets/route'
@@ -14,7 +15,10 @@ import classes from './Search.module.scss'
 type TabValue = 'Cargoes' | 'Routes'
 
 export const SearchPage = () => {
-  const [tab, setTab] = useState<TabValue>('Cargoes')
+  const searchParams = useSearchParams()
+  const userRole = searchParams?.get('userRole')
+
+  const [tab, setTab] = useState<TabValue>(userRole === 'carrier' ? 'Cargoes' : 'Routes')
 
   return (
     <ApplicationSearchFiltersProvider>

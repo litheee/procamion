@@ -75,10 +75,11 @@ export const MyApplicationModal = ({
         open={open}
         grayBox={Boolean(appliedResponse)}
         slots={{
-          bottom: !isApplicationFinished ? (
+          bottom:
             appliedResponse && !isAppliedResponseLoading ? (
               <ConfirmWorkDone
                 applicationId={application.id}
+                status={application.status}
                 message={appliedResponse.message}
                 user={appliedResponse.user}
                 onSuccess={onClose}
@@ -116,7 +117,6 @@ export const MyApplicationModal = ({
                 </div>
               </div>
             )
-          ) : null
         }}
         onClose={onClose}
       />

@@ -40,6 +40,15 @@ export const Textarea = ({
               })}
               {...props}
               {...field}
+              onChange={(e) => {
+                const valueLength = e.target.value.length
+
+                if (valueLength > maxLength) {
+                  return
+                }
+
+                return field.onChange(e)
+              }}
             />
             {valueLength === 0 ? (
               <div className={classes.maxSymbols}>{maxLength} Max</div>

@@ -16,6 +16,7 @@ type UserInfo = {
 
 type ConfirmWorkDoneProps = {
   applicationId: string
+  status?: ApplicationStatus
   user: UserInfo
   message: string
   onSuccess: () => void
@@ -23,6 +24,7 @@ type ConfirmWorkDoneProps = {
 
 export const ConfirmWorkDone = ({
   applicationId,
+  status,
   user,
   message,
   onSuccess
@@ -30,6 +32,8 @@ export const ConfirmWorkDone = ({
   const { changeStatus, isChanging } = useApplicationChangeStatus({
     onSuccess
   })
+
+  const isApplicationFinished = status === ApplicationStatus.FINISHED
 
   return (
     <div>
@@ -52,37 +56,39 @@ export const ConfirmWorkDone = ({
         </div>
       </div>
 
-      <div className={classes.actions}>
-        <Button
-          type='button'
-          color='secondary'
-          size='small'
-          isLoading={isChanging}
-          onClick={() => {
-            changeStatus({
-              applicationId,
-              status: ApplicationStatus.ARCHIVED
-            })
-          }}
-        >
-          Cancel
-        </Button>
+      {!isApplicationFinished ? (
+        <div className={classes.actions}>
+          <Button
+            type='button'
+            color='secondary'
+            size='small'
+            isLoading={isChanging}
+            onClick={() => {
+              changeStatus({
+                applicationId,
+                status: ApplicationStatus.ARCHIVED
+              })
+            }}
+          >
+            Cancel
+          </Button>
 
-        <Button
-          type='button'
-          color='success'
-          size='small'
-          isLoading={isChanging}
-          onClick={() => {
-            changeStatus({
-              applicationId,
-              status: ApplicationStatus.FINISHED
-            })
-          }}
-        >
-          Solved
-        </Button>
-      </div>
+          <Button
+            type='button'
+            color='success'
+            size='small'
+            isLoading={isChanging}
+            onClick={() => {
+              changeStatus({
+                applicationId,
+                status: ApplicationStatus.FINISHED
+              })
+            }}
+          >
+            Solved
+          </Button>
+        </div>
+      ) : null}
     </div>
   )
 }

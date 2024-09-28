@@ -19,25 +19,39 @@ import { useAuth } from '@/shared/hooks/useAuth'
 
 import classes from './Header.module.scss'
 
-export const Header = () => {
+type HeaderProps = {
+  isLanding?: boolean
+}
+
+export const Header = ({ isLanding = false }: HeaderProps) => {
   const { isAuth } = useAuth()
   const pathname = usePathname()
 
   const [isDropdownOpen, setDropdwonOpen] = useState(false)
 
   return (
-    <header className={classes.header}>
+    <header
+      className={cn(classes.header, {
+        [classes.landingHeader]: isLanding
+      })}
+    >
       <div className='wrapper'>
-        <Logo />
+        <Logo
+          className={classes.logo}
+          width={isLanding ? 273 : undefined}
+          height={isLanding ? 35 : undefined}
+        />
 
-        <Link
-          href={ROUTE_NAMES.SEARCH}
-          className={cn(classes.link, {
-            [classes.active]: pathname === ROUTE_NAMES.SEARCH
-          })}
-        >
-          Search board
-        </Link>
+        {!isLanding ? (
+          <Link
+            href={ROUTE_NAMES.SEARCH}
+            className={cn(classes.link, {
+              [classes.active]: pathname === ROUTE_NAMES.SEARCH
+            })}
+          >
+            Search board
+          </Link>
+        ) : null}
 
         <div className={classes.right}>
           <div className={classes.langSelect}>

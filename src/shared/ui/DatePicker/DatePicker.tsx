@@ -47,6 +47,12 @@ export const DatePicker = ({
               desktopPaper: {
                 className: classes.paper
               },
+              mobilePaper: {
+                className: classes.paper
+              },
+              actionBar: {
+                className: classes.actionsBar
+              },
               day: {
                 classes: {
                   root: classes.day,

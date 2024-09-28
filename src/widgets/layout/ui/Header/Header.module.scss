@@ -9,6 +9,43 @@
   }
 }
 
+.landingHeader {
+  @media screen and (max-width: 767px) {
+    &.header {
+      height: 54px;
+    }
+
+    .logo {
+      img {
+        max-width: 151px;
+        height: auto;
+      }
+    }
+  }
+
+  :global .wrapper {
+    max-width: 1328px;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+
+    @media screen and (max-width: 1327px) {
+      max-width: 1072px;
+    }
+
+    @media screen and (max-width: 1071px) {
+      max-width: 768px;
+    }
+
+    @media screen and (max-width: 767px) {
+      max-width: 640px;
+    }
+
+    @media screen and (max-width: 639px) {
+      max-width: 100%;
+    }
+  }
+}
+
 .link {
   margin-left: 48px;
   font-family: var(--font-noto-sans);

@@ -302,7 +302,13 @@ export const RouteCreateEditModal = ({
 
           {inEditMode ? (
             <div className={classes.actions}>
-              <Button isLoading={routeEditInProcess} type='button' color='secondary' size='small'>
+              <Button
+                isLoading={routeEditInProcess}
+                type='button'
+                color='secondary'
+                size='small'
+                onClick={onClose}
+              >
                 Cancel
               </Button>
 

@@ -15,6 +15,7 @@ import { useUser } from '@/shared/hooks/useUser'
 import { formatDate } from '@/shared/utils'
 
 import classes from './MyResponsesList.module.scss'
+import { InputLabel } from '@mui/material'
 
 type Status = 'Active' | 'Archived'
 
@@ -33,6 +34,7 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
 
   const [page, setPage] = useState(1)
   const [selectedResponse, setSelectedResponse] = useState<SelectedResponse>()
+  const [selectedResponseViewMode, setSelectedResponseViewMode] = useState<SelectedResponse>()
 
   const { userRole } = useUser()
 
@@ -62,7 +64,7 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                   key={id}
                   className={cn(classes.applicationCard, 'card')}
                   onClick={() => {
-                    setSelectedResponse({
+                    setSelectedResponseViewMode({
                       id,
                       message,
                       application
@@ -84,7 +86,9 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                           <Button
                             type='button'
                             size='small'
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation()
+
                               setSelectedResponse({
                                 id,
                                 message,
@@ -100,7 +104,8 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                             size='small'
                             color='error'
                             isLoading={deletingResponseInProgress}
-                            onClick={() => {
+                            onClick={(e) => {
+                              e.stopPropagation()
                               deleteResponse(id)
                             }}
                           >
@@ -152,6 +157,51 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
           }}
           onClose={() => {
             setSelectedResponse(undefined)
+          }}
+        />
+      ) : null}
+
+      {selectedResponseViewMode ? (
+        <ApplicationInfoModal
+          grayBox
+          open={Boolean(selectedResponseViewMode)}
+          title={userRole === 'CARRIER' ? 'Route' : 'Cargo'}
+          application={selectedResponseViewMode.application}
+          slots={{
+            bottom: (
+              <div className={classes.responseViewModeContainer}>
+                <InputLabel>Your comment</InputLabel>
+
+                <p>{selectedResponseViewMode.message}</p>
+
+                <div className={classes.actions}>
+                  <Button
+                    type='button'
+                    color='secondary'
+                    size='small'
+                    onClick={() => {
+                      setSelectedResponseViewMode(undefined)
+                    }}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button
+                    type='button'
+                    size='small'
+                    onClick={() => {
+                      setSelectedResponse(selectedResponseViewMode)
+                      setSelectedResponseViewMode(undefined)
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </div>
+              </div>
+            )
+          }}
+          onClose={() => {
+            setSelectedResponseViewMode(undefined)
           }}
         />
       ) : null}

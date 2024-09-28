@@ -381,7 +381,13 @@ export const CargoCreateEditModal = ({
 
           {inEditMode ? (
             <div className={classes.actions}>
-              <Button isLoading={cargoEditInProcess} type='button' color='secondary' size='small'>
+              <Button
+                isLoading={cargoEditInProcess}
+                type='button'
+                color='secondary'
+                size='small'
+                onClick={onClose}
+              >
                 Cancel
               </Button>
 

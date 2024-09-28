@@ -11,6 +11,30 @@
   }
 }
 
+.landingWrapper {
+  max-width: 1328px;
+  padding: 0 1.5rem;
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 1327px) {
+    max-width: 1072px;
+  }
+
+  @media screen and (max-width: 1071px) {
+    max-width: 768px;
+    padding: 0 1rem;
+  }
+
+  @media screen and (max-width: 767px) {
+    max-width: 640px;
+  }
+
+  @media screen and (max-width: 639px) {
+    max-width: 100%;
+  }
+}
+
 .card {
   padding: 24px;
   background: var(--color-white);

@@ -129,6 +129,14 @@
   color: red;
 }
 
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-top: 8px;
+  gap: 8px;
+}
+
 @media screen and (max-width: 850px) {
   .routeAndDate,
   .options {

@@ -1,11 +1,21 @@
+import cn from 'classnames'
+
 import { Logo } from '@/shared/ui'
 
 import classes from './Footer.module.scss'
 import Link from 'next/link'
 
-export const Footer = () => {
+type FooterProps = {
+  isLanding?: boolean
+}
+
+export const Footer = ({ isLanding }: FooterProps) => {
   return (
-    <footer className={classes.footer}>
+    <footer
+      className={cn(classes.footer, {
+        [classes.landingFooter]: isLanding
+      })}
+    >
       <div className='wrapper'>
         <div className={classes.top}>
           <Logo className={classes.logo} width={432} height={55} />
