@@ -55,7 +55,7 @@ export const ContactForm = ({ onClose }: ContactFormProps) => {
     }
   }
 
-  return !isCompleted ? (
+  return isCompleted ? (
     <div className={classes.completeContainer}>
       <h2>Thank you for your feedback!</h2>
       <h3>We will contact you shortly</h3>
