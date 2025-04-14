@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import Typography from '@mui/material/Typography'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,15 +18,29 @@ type FormSchema = z.infer<typeof schema>
 
 type PhoneAddFormModalProps = {
   open: boolean
+  phone?: string
   onClose: () => void
   onPhoneSubmit: (phone: string) => void
 }
 
-export const PhoneAddFormModal = ({ open, onClose, onPhoneSubmit }: PhoneAddFormModalProps) => {
+export const PhoneAddFormModal = ({
+  phone: phoneDefault,
+  open,
+  onClose,
+  onPhoneSubmit
+}: PhoneAddFormModalProps) => {
   const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
-  const { handleSubmit } = useFormProps
+  const { handleSubmit, reset } = useFormProps
+
+  useEffect(() => {
+    if (!phoneDefault) return
+
+    reset({
+      phone: phoneDefault
+    })
+  }, [phoneDefault])
 
   const onFormSubmit = ({ phone }: FormSchema) => {
     onPhoneSubmit(phone)
@@ -43,13 +58,14 @@ export const PhoneAddFormModal = ({ open, onClose, onPhoneSubmit }: PhoneAddForm
           }}
         >
           <Typography>
-            Please enter your phone number. <br /> We will send you a confirmation code.
+            Please enter your phone number.
+            {/* <br /> We will send you a confirmation code. */}
           </Typography>
 
           <PhonePicker name='phone' className={classes.phoneField} />
 
           <Button type='submit' fullWidth>
-            Send
+            Save
           </Button>
         </form>
       </FormProvider>

@@ -11,7 +11,7 @@ interface LogoProps {
 
 export const Logo = ({ className, width = 169, height = 22.4 }: LogoProps) => {
   return (
-    <Link href={ROUTE_NAMES.SEARCH} className={className}>
+    <Link href={ROUTE_NAMES.MAIN} className={className}>
       <Image
         width={width}
         height={height}

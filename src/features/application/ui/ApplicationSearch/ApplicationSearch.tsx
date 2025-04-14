@@ -8,10 +8,11 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import Typography from '@mui/material/Typography'
 import FormControl from '@mui/material/FormControl'
 import InputLabel from '@mui/material/InputLabel'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter, usePathname } from 'next/navigation'
 
 import { RouteAutocomplete } from '@/features/route'
 import { Button, DatePicker } from '@/shared/ui'
+import { ROUTE_NAMES } from '@/shared/config'
 
 import classes from './ApplicationSearch.module.scss'
 
@@ -30,19 +31,26 @@ const schema = z.object({
 type FormSchema = z.infer<typeof schema>
 
 type SubmitFields = Partial<{
+  departure: string
   departureCountry: string
   departureCity: string
+  departureCountryCode: string
+  arrival: string
   arrivalCountry: string
   arrivalCity: string
+  arrivalCountryCode: string
   departureDate: string
 }>
 
 type ApplicationSearchProps = {
+  filters?: Partial<FormSchema>
   onSearchSubmit: (fields: SubmitFields) => void
 }
 
-export const ApplicationSearch = ({ onSearchSubmit }: ApplicationSearchProps) => {
+export const ApplicationSearch = ({ filters, onSearchSubmit }: ApplicationSearchProps) => {
   const searchParams = useSearchParams()
+  const router = useRouter()
+  const pathname = usePathname()
 
   const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
@@ -50,7 +58,7 @@ export const ApplicationSearch = ({ onSearchSubmit }: ApplicationSearchProps) =>
   const { handleSubmit, reset } = useFormProps
 
   useEffect(() => {
-    if (!searchParams) return
+    if (!searchParams || !searchParams.size || !pathname) return
 
     const departure = searchParams.get('departure')
     const departureCountry = searchParams.get('departureCountry')
@@ -75,26 +83,50 @@ export const ApplicationSearch = ({ onSearchSubmit }: ApplicationSearchProps) =>
     })
 
     onSearchSubmit({
+      departure: departure || undefined,
       departureCountry: departureCountry || undefined,
       departureCity: departureCity || undefined,
+      departureCountryCode: departureCountryCode || undefined,
+      arrival: arrival || undefined,
       arrivalCountry: arrivalCountry || undefined,
       arrivalCity: arrivalCity || undefined,
+      arrivalCountryCode: arrivalCountryCode || undefined,
       departureDate: departureDate || undefined
     })
+
+    router.replace(ROUTE_NAMES.SEARCH)
   }, [searchParams, reset])
 
+  useEffect(() => {
+    if (!filters) return
+
+    const filterWithValues = Object.fromEntries(
+      Object.entries(filters).filter(([_, value]) => Boolean(value))
+    )
+
+    reset(filterWithValues)
+  }, [filters, reset])
+
   const onFormSubmit = ({
+    departure,
     departureCountry,
     departureCity,
+    departureCountryCode,
+    arrival,
     arrivalCountry,
     arrivalCity,
+    arrivalCountryCode,
     departureDate
   }: FormSchema) => {
     onSearchSubmit({
+      departure: departure || undefined,
       departureCountry: departureCountry || undefined,
       departureCity: departureCity || undefined,
+      departureCountryCode: departureCountryCode || undefined,
+      arrival: arrival || undefined,
       arrivalCountry: arrivalCountry || undefined,
       arrivalCity: arrivalCity || undefined,
+      arrivalCountryCode: arrivalCountryCode || undefined,
       departureDate: departureDate || undefined
     })
   }

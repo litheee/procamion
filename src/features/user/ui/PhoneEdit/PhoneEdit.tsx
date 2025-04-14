@@ -16,8 +16,8 @@ export const PhoneEdit = () => {
   const phone = getValues('phone')
 
   const [isAddModalOpen, setAddModalOpen] = useState(false)
-  const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
-  const [phoneForVerification, setPhoneForVerification] = useState('')
+  // const [isConfirmModalOpen, setConfirmModalOpen] = useState(false)
+  // const [phoneForVerification, setPhoneForVerification] = useState('')
 
   return (
     <div className={classes.phoneEdit}>
@@ -54,16 +54,19 @@ export const PhoneEdit = () => {
 
       <PhoneAddFormModal
         open={isAddModalOpen}
+        phone={phone}
         onClose={() => {
           setAddModalOpen(false)
         }}
         onPhoneSubmit={(phone: string) => {
-          setPhoneForVerification(phone)
-          setConfirmModalOpen(true)
+          setValue('phone', phone)
+
+          // setPhoneForVerification(phone)
+          // setConfirmModalOpen(true)
         }}
       />
 
-      {isConfirmModalOpen ? (
+      {/* {isConfirmModalOpen ? (
         <PhoneConfirmModal
           open={isConfirmModalOpen}
           onClose={() => {
@@ -75,7 +78,7 @@ export const PhoneEdit = () => {
             setValue('phone', phoneForVerification)
           }}
         />
-      ) : null}
+      ) : null} */}
     </div>
   )
 }

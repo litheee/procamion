@@ -82,7 +82,8 @@ export const ApplicationSearchFilters = () => {
       </div>
 
       <Modal
-        title='Search & Filters'
+        title='Search'
+        className={classes.filtersModal}
         open={isSearchFiltersModalOpen}
         onClose={() => {
           setSearchFiltersModalOpen(false)
@@ -90,6 +91,7 @@ export const ApplicationSearchFilters = () => {
       >
         <>
           <ApplicationSearch
+            filters={filters}
             onSearchSubmit={(searchData) => {
               changeFilters(searchData)
               setSearchFiltersModalOpen(false)
@@ -105,6 +107,14 @@ export const ApplicationSearchFilters = () => {
               {useMemo(
                 () => (
                   <ApplicationParamsFilters
+                    filters={{
+                      palletsNumberRange: [
+                        filters.palletsNumberRangeStart,
+                        filters.palletsNumberRangeEnd
+                      ],
+                      priceRange: [filters.priceRangeStart, filters.priceRangeEnd],
+                      temperatureRange: [filters.temperatureRangeStart, filters.temperatureRangeEnd]
+                    }}
                     onFiltersChange={({ priceRange, palletsNumberRange, temperatureRange }) => {
                       const [priceRangeStart, priceRangeEnd] = priceRange
                       const [palletsNumberRangeStart, palletsNumberRangeEnd] = palletsNumberRange
@@ -121,7 +131,14 @@ export const ApplicationSearchFilters = () => {
                     }}
                   />
                 ),
-                []
+                [
+                  filters.palletsNumberRangeStart,
+                  filters.palletsNumberRangeEnd,
+                  filters.priceRangeStart,
+                  filters.priceRangeEnd,
+                  filters.temperatureRangeStart,
+                  filters.temperatureRangeEnd
+                ]
               )}
             </div>
           </div>

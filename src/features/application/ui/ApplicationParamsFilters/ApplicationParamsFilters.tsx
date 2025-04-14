@@ -28,10 +28,14 @@ type Filters = {
 }
 
 type ApplicationParamsFiltersProps = {
+  filters?: Filters
   onFiltersChange: (filters: Filters) => void
 }
 
-export const ApplicationParamsFilters = ({ onFiltersChange }: ApplicationParamsFiltersProps) => {
+export const ApplicationParamsFilters = ({
+  filters,
+  onFiltersChange
+}: ApplicationParamsFiltersProps) => {
   const useFormProps = useForm<FormSchema>({
     defaultValues: {
       priceRange: [undefined, undefined],
@@ -40,7 +44,7 @@ export const ApplicationParamsFilters = ({ onFiltersChange }: ApplicationParamsF
     },
     resolver: zodResolver(schema)
   })
-  const { watch } = useFormProps
+  const { watch, reset } = useFormProps
   const filtersWatch = watch()
 
   const debounceOnFiltersChange = useCallback(
@@ -59,6 +63,12 @@ export const ApplicationParamsFilters = ({ onFiltersChange }: ApplicationParamsF
       temperatureRange
     })
   }, [filtersWatch])
+
+  useEffect(() => {
+    if (!filters) return
+
+    reset(filters)
+  }, [filters, reset])
 
   return (
     <FormProvider {...useFormProps}>
