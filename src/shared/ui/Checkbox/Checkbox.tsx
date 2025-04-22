@@ -19,13 +19,13 @@ export const Checkbox = ({ name, className, required = true, ...props }: Checkbo
   return (
     <Controller
       name={name}
-      defaultValue={false}
       rules={{ required }}
       control={control}
       render={({ field, fieldState: { error } }) => {
         return (
           <MuiCheckbox
             {...props}
+            defaultChecked={false}
             classes={{
               root: cn(className, {
                 [classes.error]: Boolean(error)

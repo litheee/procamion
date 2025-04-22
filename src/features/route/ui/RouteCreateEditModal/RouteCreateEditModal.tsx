@@ -27,6 +27,7 @@ type RouteCreateEditModalProps = {
   route?: ApplicationInfoType
   inEditMode?: boolean
   open: boolean
+  onActionSubmit?: () => void
   onClose: () => void
 }
 
@@ -59,6 +60,7 @@ export const RouteCreateEditModal = ({
   route,
   inEditMode = false,
   open,
+  onActionSubmit,
   onClose
 }: RouteCreateEditModalProps) => {
   const useFormProps = useForm<FormSchema>({
@@ -81,14 +83,24 @@ export const RouteCreateEditModal = ({
   const { mutate: createRoute, isPending: routeCreateInProcess } = useRouteCreate({
     onSuccess: () => {
       reset()
+
       onClose()
+
+      if (onActionSubmit) {
+        onActionSubmit()
+      }
     }
   })
 
   const { mutate: editRoute, isPending: routeEditInProcess } = useRouteEdit({
     onSuccess: () => {
       reset()
+
       onClose()
+
+      if (onActionSubmit) {
+        onActionSubmit()
+      }
     }
   })
 

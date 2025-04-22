@@ -20,6 +20,7 @@ type ConfirmWorkDoneProps = {
   user: UserInfo
   message: string
   onSuccess: () => void
+  onClose: () => void
 }
 
 export const ConfirmWorkDone = ({
@@ -27,6 +28,7 @@ export const ConfirmWorkDone = ({
   status,
   user,
   message,
+  onClose,
   onSuccess
 }: ConfirmWorkDoneProps) => {
   const { changeStatus, isChanging } = useApplicationChangeStatus({
@@ -63,12 +65,7 @@ export const ConfirmWorkDone = ({
             color='secondary'
             size='small'
             isLoading={isChanging}
-            onClick={() => {
-              changeStatus({
-                applicationId,
-                status: ApplicationStatus.ARCHIVED
-              })
-            }}
+            onClick={onClose}
           >
             Cancel
           </Button>

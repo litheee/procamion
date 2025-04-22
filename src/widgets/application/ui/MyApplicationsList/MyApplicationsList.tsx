@@ -56,13 +56,13 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
       <ul className={classes.applicationsList}>
         {myApplicationsData && !isMyApplicationsLoading
           ? myApplicationsData.applicationsList.map((application) => {
-              const isApplicationFinished = application.status === ApplicationStatus.FINISHED
+              const isApplicationOpen = application.status === ApplicationStatus.OPEN
 
               return (
                 <li
                   key={application.id}
                   className={cn(classes.applicationCard, 'card', {
-                    [classes.applicationFinished]: isApplicationFinished
+                    [classes.moreSpaceBottom]: !isApplicationOpen
                   })}
                   onClick={() => {
                     setSelectedApplication(application)
@@ -83,7 +83,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                           ) : null}
                         </div>
                       ),
-                      bottom: !isApplicationFinished ? (
+                      bottom: isApplicationOpen ? (
                         <div className={classes.applicationCardBottom}>
                           <button
                             className={classes.offersButton}

@@ -17,3 +17,13 @@ export type ChooseRouteResponsePayload = {
   routeId: string
   responseId: string
 }
+
+export type RejectCargoResponsePayload = {
+  cargoId: string
+  responseId: string
+}
+
+export type RejectRouteResponsePayload = {
+  routeId: string
+  responseId: string
+}

@@ -25,7 +25,7 @@ const schema = z.object({
   arrivalCountry: z.string(),
   arrivalCity: z.string(),
   arrivalCountryCode: z.string(),
-  departureDate: z.string().nullable().optional()
+  departureDate: z.string().nullish()
 })
 
 type FormSchema = z.infer<typeof schema>
@@ -55,7 +55,7 @@ export const ApplicationSearch = ({ filters, onSearchSubmit }: ApplicationSearch
   const useFormProps = useForm<FormSchema>({
     resolver: zodResolver(schema)
   })
-  const { handleSubmit, reset } = useFormProps
+  const { handleSubmit, reset, watch } = useFormProps
 
   useEffect(() => {
     if (!searchParams || !searchParams.size || !pathname) return

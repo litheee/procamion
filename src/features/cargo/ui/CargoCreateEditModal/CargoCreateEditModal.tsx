@@ -27,6 +27,7 @@ type CargoCreateEditModalProps = {
   cargo?: ApplicationInfoType
   inEditMode?: boolean
   open: boolean
+  onActionSubmit?: () => void
   onClose: () => void
 }
 
@@ -63,6 +64,7 @@ export const CargoCreateEditModal = ({
   cargo,
   inEditMode = false,
   open,
+  onActionSubmit,
   onClose
 }: CargoCreateEditModalProps) => {
   const [tab, setTab] = useState<TabValue>('FTL')
@@ -99,13 +101,23 @@ export const CargoCreateEditModal = ({
   const { mutate: createCargo, isPending: cargoCreateInProcess } = useCargoCreate({
     onSuccess: () => {
       reset()
+
       onClose()
+
+      if (onActionSubmit) {
+        onActionSubmit()
+      }
     }
   })
   const { mutate: editCargo, isPending: cargoEditInProcess } = useCargoEdit({
     onSuccess: () => {
       reset()
+
       onClose()
+
+      if (onActionSubmit) {
+        onActionSubmit()
+      }
     }
   })
 

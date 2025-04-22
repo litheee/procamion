@@ -67,7 +67,7 @@ export const DatePicker = ({
               [classes.error]: Boolean(error)
             })}
             inputRef={ref}
-            value={dayjs(value).isValid() ? dayjs(value) : null}
+            value={dayjs(value).isValid() ? dayjs(value) : undefined}
             onChange={(value) => {
               if (!dayjs(value).isValid()) return onChange(value)
 

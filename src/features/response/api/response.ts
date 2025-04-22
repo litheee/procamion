@@ -3,7 +3,9 @@ import type {
   ChooseCargoResponsePayload,
   ChooseRouteResponsePayload,
   CreateResponsePayload,
-  EditResponsePayload
+  EditResponsePayload,
+  RejectCargoResponsePayload,
+  RejectRouteResponsePayload
 } from './response.types'
 
 export const createCargoResponse = ({ applicationId, comment }: CreateResponsePayload) => {
@@ -44,4 +46,12 @@ export const chooseCargoResponse = ({ cargoId, responseId }: ChooseCargoResponse
 
 export const chooseRouteResponse = ({ routeId, responseId }: ChooseRouteResponsePayload) => {
   return API.put(`/route_applications/${routeId}/responses/${responseId}`)
+}
+
+export const rejectCargoResponse = ({ cargoId, responseId }: RejectCargoResponsePayload) => {
+  return API.put(`/cargo_applications/${cargoId}/responses/${responseId}/reject`)
+}
+
+export const rejectRouteResponse = ({ routeId, responseId }: RejectRouteResponsePayload) => {
+  return API.put(`/route_applications/${routeId}/responses/${responseId}/reject`)
 }

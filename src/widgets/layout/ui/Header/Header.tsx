@@ -42,16 +42,14 @@ export const Header = ({ isLanding = false }: HeaderProps) => {
           height={isLanding ? 35 : undefined}
         />
 
-        {!isLanding ? (
-          <Link
-            href={ROUTE_NAMES.SEARCH}
-            className={cn(classes.link, {
-              [classes.active]: pathname === ROUTE_NAMES.SEARCH
-            })}
-          >
-            Search board
-          </Link>
-        ) : null}
+        <Link
+          href={ROUTE_NAMES.SEARCH}
+          className={cn(classes.link, {
+            [classes.active]: pathname === ROUTE_NAMES.SEARCH
+          })}
+        >
+          Search board
+        </Link>
 
         <div className={classes.right}>
           <div className={classes.langSelect}>

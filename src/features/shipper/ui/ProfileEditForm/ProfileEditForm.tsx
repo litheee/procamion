@@ -185,11 +185,11 @@ export const ShipperProfileEditForm = ({ onEditFinish }: ProfileEditFormProps) =
               </li>
             </ul>
 
-            <FormControlLabel
+            {/* <FormControlLabel
               className={classes.checkboxLabel}
               control={<Checkbox name='newsletterSubscribe' required={false} />}
               label='Want to subscribe newsletter'
-            />
+            /> */}
           </div>
         </div>
 

@@ -3,12 +3,9 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { Skeleton } from '@mui/material'
 
-import {
-  ApplicationInfoModal,
-  ApplicationInfoType,
-  ApplicationStatus
-} from '@/entities/application'
+import { ApplicationInfoModal, ApplicationInfoType } from '@/entities/application'
 import { ConfirmWorkDone } from '@/features/application'
 import { CargoCreateEditModal, useCargoDelete } from '@/features/cargo'
 import { RouteCreateEditModal, useRouteDelete } from '@/features/route'
@@ -65,8 +62,6 @@ export const MyApplicationModal = ({
     router.push(`/profile/offers/${application.id}`)
   }
 
-  const isApplicationFinished = application.status === ApplicationStatus.FINISHED
-
   return (
     <>
       <ApplicationInfoModal
@@ -75,13 +70,14 @@ export const MyApplicationModal = ({
         open={open}
         grayBox={Boolean(appliedResponse)}
         slots={{
-          bottom:
+          bottom: !isAppliedResponseLoading ? (
             appliedResponse && !isAppliedResponseLoading ? (
               <ConfirmWorkDone
                 applicationId={application.id}
                 status={application.status}
                 message={appliedResponse.message}
                 user={appliedResponse.user}
+                onClose={onClose}
                 onSuccess={onClose}
               />
             ) : (
@@ -117,6 +113,9 @@ export const MyApplicationModal = ({
                 </div>
               </div>
             )
+          ) : (
+            <Skeleton height={144} />
+          )
         }}
         onClose={onClose}
       />
@@ -126,7 +125,10 @@ export const MyApplicationModal = ({
           inEditMode
           cargo={application}
           open={isEditModalOpen}
-          onClose={onActionSuccess}
+          onActionSubmit={onActionSuccess}
+          onClose={() => {
+            setEditModalOpen(false)
+          }}
         />
       ) : null}
 
@@ -135,7 +137,10 @@ export const MyApplicationModal = ({
           inEditMode
           route={application}
           open={isEditModalOpen}
-          onClose={onActionSuccess}
+          onActionSubmit={onActionSuccess}
+          onClose={() => {
+            setEditModalOpen(false)
+          }}
         />
       ) : null}
     </>
