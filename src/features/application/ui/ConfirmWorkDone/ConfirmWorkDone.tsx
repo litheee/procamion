@@ -12,6 +12,8 @@ type UserInfo = {
   id: string
   first_name: string
   last_name: string
+  email: string
+  phone_number: string
 }
 
 type ConfirmWorkDoneProps = {
@@ -37,6 +39,12 @@ export const ConfirmWorkDone = ({
 
   const isApplicationFinished = status === ApplicationStatus.FINISHED
 
+  const { phone_number: phone } = user
+  const phoneFormatted = `${phone.slice(0, -10)}-${phone.slice(-10, -7)}-${phone.slice(
+    -7,
+    -4
+  )}-${phone.slice(-4)}`
+
   return (
     <div>
       <div className={classes.responseBody}>
@@ -49,6 +57,10 @@ export const ConfirmWorkDone = ({
             <p>
               {user.first_name} {user.last_name}
             </p>
+
+            <p>{user.email}</p>
+
+            <p>{phoneFormatted}</p>
           </div>
         </div>
 

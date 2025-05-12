@@ -5,6 +5,8 @@ export type ApplicationInfoType = {
   departureCountry: string
   departureCity: string
   departureDate: string | null
+  arrivalAddress?: string
+  departureAddress?: string
   arrivalCountry: string
   arrivalCity: string
   arrivalDate?: string

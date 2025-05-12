@@ -123,7 +123,10 @@ export const CargoCreateEditModal = ({
 
   useEffect(() => {
     if (!cargo) return
+
     const {
+      arrivalAddress,
+      departureAddress,
       departureCountry,
       departureCity,
       arrivalCountry,
@@ -138,10 +141,10 @@ export const CargoCreateEditModal = ({
     } = cargo
 
     reset({
-      departure: `${departureCountry}, ${departureCity}`,
+      departure: departureAddress,
       departureCountry,
       departureCity,
-      arrival: `${arrivalCountry}, ${arrivalCity}`,
+      arrival: arrivalAddress,
       arrivalCountry,
       arrivalCity,
       departureDate,
