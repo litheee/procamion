@@ -13,6 +13,7 @@ import {
 } from '@/app/providers'
 import { muiTheme } from '@/shared/config'
 import { inter, notoSans, roboto } from '@/shared/assets/fonts'
+import { YandexMetrika } from '@/shared/lib'
 
 import '@/app/styles/reset.css'
 import '@/app/styles/variables.css'
@@ -47,6 +48,8 @@ export default function RootLayout({
             </DatePickerLocaliztionProvider>
           </ThemeProvider>
         </AppRouterCacheProvider>
+
+        <YandexMetrika />
       </body>
     </html>
   )

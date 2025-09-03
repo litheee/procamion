@@ -25,11 +25,11 @@ export const RouteResponseActions = ({ responseId, routeId }: RouteResponseActio
 
   const { mutate: acceptResponse, isPending: isResponseAccepting } = useChooseRouteResponse({
     onSuccess: () => {
-      router.push('/profile/applications')
-
-      queryClient.invalidateQueries({
+      queryClient.resetQueries({
         queryKey: ['carrier-routes']
       })
+
+      router.push('/profile/applications')
     }
   })
 

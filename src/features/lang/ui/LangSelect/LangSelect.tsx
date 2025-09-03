@@ -17,9 +17,9 @@ type LangSelectProps = {}
 
 export const LangSelect = ({}: LangSelectProps) => {
   const languages = [
-    { label: 'EN', value: 'EN', src: '/icons/flags/en.svg' },
-    { label: 'IT', value: 'IT', src: '/icons/flags/it.svg' },
-    { label: 'GE', value: 'GE', src: '/icons/flags/ge.svg' }
+    { label: 'EN', value: 'EN', src: '/icons/flags/en.svg' }
+    // { label: 'IT', value: 'IT', src: '/icons/flags/it.svg' },
+    // { label: 'GE', value: 'GE', src: '/icons/flags/ge.svg' }
   ]
 
   const [selectedLang, setSelectedLang] = useState(languages[0])

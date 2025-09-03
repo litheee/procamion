@@ -26,6 +26,7 @@ export const ResponseAcceptConfirmModal = ({
           <Button color='secondary' size='small' onClick={onClose}>
             Cancel
           </Button>
+
           <Button color='success' size='small' onClick={onConfirm}>
             Proceed
           </Button>

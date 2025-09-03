@@ -77,7 +77,7 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
                       top: (
                         <div className={classes.applicationCardTop}>
                           <Typography fontSize={18} fontWeight={700}>
-                            {userRole === 'CARRIER' ? 'Route' : 'Cargo'} ({formatDate(createDate)})
+                            {userRole === 'CARRIER' ? 'Cargo' : 'Route'} ({formatDate(createDate)})
                           </Typography>
                         </div>
                       ),
@@ -139,7 +139,7 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
         <ApplicationInfoModal
           grayBox
           open={Boolean(selectedResponse)}
-          title={userRole === 'CARRIER' ? 'Route' : 'Cargo'}
+          title={userRole === 'CARRIER' ? 'Cargo' : 'Route'}
           application={selectedResponse.application}
           slots={{
             bottom: (
@@ -165,7 +165,7 @@ export const MyResponsesList = ({ status }: MyResponsesListProps) => {
         <ApplicationInfoModal
           grayBox
           open={Boolean(selectedResponseViewMode)}
-          title={userRole === 'CARRIER' ? 'Route' : 'Cargo'}
+          title={userRole === 'CARRIER' ? 'Cargo' : 'Route'}
           application={selectedResponseViewMode.application}
           slots={{
             bottom: (

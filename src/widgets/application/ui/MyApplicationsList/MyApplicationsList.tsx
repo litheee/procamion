@@ -78,7 +78,7 @@ export const MyApplicationsList = ({ status }: MyApplicationsListProps) => {
                             {formatDate(application.createDate)})
                           </Typography>
 
-                          {userRole === 'SHIPPER' && application?.status ? (
+                          {application?.status ? (
                             <CargoStatusBadge status={application.status} />
                           ) : null}
                         </div>

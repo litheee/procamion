@@ -25,11 +25,11 @@ export const CargoResponseActions = ({ responseId, cargoId }: CargoResponseActio
 
   const { mutate: acceptResponse, isPending: isResponseAccepting } = useChooseCargoResponse({
     onSuccess: () => {
-      router.push('/profile/applications')
-
-      queryClient.invalidateQueries({
+      queryClient.resetQueries({
         queryKey: ['shipper-cargoes']
       })
+
+      router.push('/profile/applications')
     }
   })
 
