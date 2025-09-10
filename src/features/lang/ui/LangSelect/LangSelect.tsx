@@ -29,7 +29,14 @@ export const LangSelect = ({}: LangSelectProps) => {
       <div className={classes.dropdown}>
         <Dropdown>
           <MenuButton className={classes.menuButton}>
-            <Image width={32} height={32} src={selectedLang.src} alt={selectedLang.label} />
+            <Image
+              width={32}
+              height={32}
+              src={selectedLang.src}
+              alt={selectedLang.label}
+              quality={100}
+              priority
+            />
 
             {selectedLang.label}
           </MenuButton>
@@ -48,7 +55,7 @@ export const LangSelect = ({}: LangSelectProps) => {
                     setSelectedLang(language)
                   }}
                 >
-                  <Image width={20} height={20} src={src} alt={label} />
+                  <Image width={20} height={20} src={src} alt={label} quality={100} priority />
 
                   {label}
                 </MenuItem>

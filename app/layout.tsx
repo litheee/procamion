@@ -49,7 +49,7 @@ export default function RootLayout({
           </ThemeProvider>
         </AppRouterCacheProvider>
 
-        <YandexMetrika />
+        {/* <YandexMetrika /> */}
       </body>
     </html>
   )

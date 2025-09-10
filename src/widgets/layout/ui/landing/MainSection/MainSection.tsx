@@ -39,14 +39,14 @@ export const MainSection = () => {
             </h3>
           </div>
 
-          <div className={classes.chooseWay}>
+          {/* <div className={classes.chooseWay}>
             <Image src='/icons/landing/box-big.svg' width={130} height={142} alt='big package' />
             <p>Choose your way</p>
             <p>
               Improve your shipping income by finding new partners and as a result escape empty
               travelling
             </p>
-          </div>
+          </div> */}
         </div>
 
         <div className={classes.contentBottomContainer}>

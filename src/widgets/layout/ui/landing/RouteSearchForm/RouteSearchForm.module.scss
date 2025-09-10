@@ -71,6 +71,8 @@
 }
 
 .datePickerContainer {
+  position: relative;
+
   & > div > div {
     border: none;
 
@@ -79,7 +81,21 @@
     }
 
     & > div {
-      display: none;
+      position: absolute;
+      left: 17px;
+      top: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+
+      button {
+        width: 25px;
+        height: 25px;
+        padding: 15px;
+      }
+
+      svg {
+        display: none;
+      }
     }
   }
 }

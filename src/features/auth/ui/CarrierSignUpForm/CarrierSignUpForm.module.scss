@@ -34,4 +34,10 @@
 .drivingLicnseRow {
   display: flex;
   gap: 16px;
+
+  label {
+    text-overflow: unset;
+    overflow: visible;
+    white-space: normal;
+  }
 }
